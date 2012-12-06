@@ -1,0 +1,264 @@
+import init.ovation.usb.rc
+
+on init
+    mount debugfs /sys/kernel/debug /sys/kernel/debug
+    mkdir /storage 0050 system sdcard_r
+    mkdir /storage/sdcard0 0000 system system
+    mkdir /storage/sdcard1 0000 system system
+
+    # for backwards compatibility
+    symlink /storage/sdcard0 /mnt/emmc
+    symlink /storage/sdcard0 /emmc
+    symlink  /storage/sdcard1 /sdcard
+    symlink  /storage/sdcard1 /mnt/sdcard
+
+    symlink /system/vendor /vendor
+
+    export EXTERNAL_STORAGE /storage/sdcard1
+    export SECONDARY_STORAGE /storage/sdcard0
+
+    # for ovation
+    mkdir /rom 0777 root root	
+    mkdir /bootdata 0777 root root
+	
+    # power management
+    # Enable off mode by default
+    write /sys/kernel/debug/pm_debug/enable_off_mode 1
+
+    # setup global environment
+    export PHONE_STORAGE /storage/sdcard0
+    export DSP_PATH /system/lib/dsp
+    export DEFAULT_BASEIMAGE /system/lib/dsp/baseimage.dof
+
+on post-fs
+    # Insert BT modules
+    #Disable BT LE
+    insmod /system/lib/ti-bluez-ko/bluetooth.ko force_acl_master=1 enable_mgmt=1 enable_le=0
+    insmod /system/lib/ti-bluez-ko/rfcomm.ko
+    insmod /system/lib/ti-bluez-ko/hidp.ko
+    insmod /system/lib/ti-bluez-ko/btwilink.ko
+    insmod /system/lib/ti-bluez-ko/bnep.ko
+
+on fs
+    # mount partitions
+    mount ext4 /dev/block/mmcblk1p2 /system wait ro errors=panic
+    mount ext4 /dev/block/platform/omap/omap_hsmmc.1/by-name/cache /cache wait noatime nosuid nodev errors=panic
+    mount ext4 /dev/block/mmcblk1p3 /data wait noatime nosuid nodev errors=panic
+    mount vfat /dev/block/platform/omap/omap_hsmmc.1/by-name/rom /rom sync noatime nodiratime uid=1000,gid=1000,fmask=117,dmask=007
+    mount vfat /dev/block/platform/omap/omap_hsmmc.1/by-name/bootdata /bootdata wait noatime nodiratime uid=1000,gid=1000,fmask=117,dmask=007
+
+on post-fs-data
+    # we will remap this as /mnt/sdcard with the sdcard fuse tool
+#    mkdir /data/media 0775 media_rw media_rw
+#    chown media_rw media_rw /data/media
+#    setprop vold.post_fs_data_done 1
+
+on boot
+    setprop ro.radio.noril yes
+
+    # fake some battery state
+    setprop status.battery.state Slow
+    setprop status.battery.level 5
+    setprop status.battery.level_raw  50
+    setprop status.battery.level_scale 9
+
+    # wireless
+    mkdir /data/misc/wifi 0770 wifi wifi
+    mkdir /data/misc/wifi/sockets 0770 wifi wifi
+    mkdir /data/misc/dhcp 0770 dhcp dhcp
+    chown dhcp dhcp /data/misc/dhcp
+
+    # Set default maximum of 1008 on cpu0
+    # (peformance settings will change this if set by user)
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1008000
+
+    # Give system ownership and permission to boost clock for specified timeout
+    # Note boost_timeout cannot be changed from application because of 
+    # dynamic sysfs creation. It will have default value of 3 sec.
+    chown system system /sys/devices/system/cpu/cpu0/cpufreq/boost_cpufreq
+    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/boost_cpufreq
+
+    # Boost the CPU for 30 secs during boot
+    write /sys/devices/system/cpu/cpufreq/interactive/boost_timeout 30000000
+    write /sys/devices/system/cpu/cpu0/cpufreq/boost_cpufreq 1
+
+    insmod /system/lib/modules/compat.ko
+    insmod /system/lib/modules/cfg80211.ko
+    insmod /system/lib/modules/mac80211.ko
+    insmod /system/lib/modules/wl12xx.ko
+
+    # Fix wlan MAC addr
+    exec /system/bin/fix-mac.sh
+
+    # Load SGX Modules
+    insmod /system/lib/modules/pvrsrvkm_sgx544_112.ko
+
+    # SGX driver
+    chmod 0666 /dev/pvrsrvkm
+
+    chown media media /dev/syslink-proc4430
+    chown media media /dev/syslink-procmgr
+    chown media media /dev/syslink_ipc
+    chown media media /dev/omap-rproc0
+    chown media media /dev/omap-rproc1
+    chown media media /dev/omap-rproc2
+    chown media media /dev/iovmm-omap0
+    chown media media /dev/iovmm-omap1
+    chown media media /dev/omap-devh0
+    chown media media /dev/omap-devh1
+    chown media media /dev/omap-devh2
+
+    chmod 660 /dev/syslink-proc4430
+    chmod 660 /dev/syslink-procmgr
+    chmod 660 /dev/syslink_ipc
+    chmod 440 /dev/omap-rproc0
+    chmod 440 /dev/omap-rproc1
+    chmod 440 /dev/omap-rproc2
+    chmod 440 /dev/iovmm-omap0
+    chmod 440 /dev/iovmm-omap1
+    chmod 440 /dev/omap-devh0
+    chmod 440 /dev/omap-devh1
+    chmod 440 /dev/omap-devh2
+    
+    chown system system /sys/devices/virtual/input/input0/mode
+    chmod 0770 /sys/devices/virtual/input/input0/mode
+    chown system system /sys/devices/virtual/input/input0/delay
+    chmod 0770 /sys/devices/virtual/input/input0/delay
+    
+    # change permissions for Overlay
+    chown system system /dev/video1
+    chown system system /dev/video2
+    chown system system /dev/video3
+    
+    # change permissions for overlay managers and display devices
+    chown system system /sys/devices/platform/omapdss/display0/enabled
+    chown system system /sys/devices/platform/omapdss/display1/enabled
+    chown system system /sys/devices/platform/omapdss/display2/enabled
+    chown system system /sys/devices/platform/omapdss/display3/enabled
+    chown system system /sys/devices/platform/omapdss/display0/name
+    chown system system /sys/devices/platform/omapdss/display1/name
+    chown system system /sys/devices/platform/omapdss/display2/name
+    chown system system /sys/devices/platform/omapdss/display3/name
+    chown system system /sys/devices/platform/omapdss/overlay0/manager
+    chown system system /sys/devices/platform/omapdss/overlay1/manager
+    chown system system /sys/devices/platform/omapdss/overlay2/manager
+    chown system system /sys/devices/platform/omapdss/overlay3/manager
+    chown system system /sys/devices/platform/omapdss/overlay0/zorder
+    chown system system /sys/devices/platform/omapdss/overlay1/zorder
+    chown system system /sys/devices/platform/omapdss/overlay2/zorder
+    chown system system /sys/devices/platform/omapdss/overlay3/zorder
+    
+    # change permissions for manager tranparency parameters
+    chown system system /sys/devices/platform/omapdss/manager0/name
+    chown system system /sys/devices/platform/omapdss/manager0/display
+    chown system system /sys/devices/platform/omapdss/manager1/name
+    chown system system /sys/devices/platform/omapdss/manager1/display
+    chown system system /sys/devices/platform/omapdss/manager2/name
+    chown system system /sys/devices/platform/omapdss/manager2/display
+    chown system system /sys/devices/platform/omapdss/overlay0/enabled
+    chown system system /sys/devices/platform/omapdss/overlay1/enabled
+    chown system system /sys/devices/platform/omapdss/overlay2/enabled
+    chown system system /sys/devices/platform/omapdss/overlay3/enabled
+    
+    # change permissions for display timings to get the resolutions
+    chown system system /sys/devices/platform/omapdss/display0/timings
+    chown system system /sys/devices/platform/omapdss/display1/timings
+    chown system system /sys/devices/platform/omapdss/display2/timings
+    chown system system /sys/devices/platform/omapdss/display3/timings
+    chown system system /sys/devices/platform/omapdss/display2/code
+
+    # change permissions for i2c-2 device
+    chmod 0660 /dev/i2c-2
+    chown media media /dev/i2c-2
+
+    # change permissions for alsa nodes
+    chmod 0777 /dev/snd/controlC0
+    chmod 0777 /dev/snd/pcmC0D0p
+    chmod 0777 /dev/snd/pcmC0D1c
+    chmod 0777 /dev/snd/pcmC0D1p
+    chmod 0777 /dev/snd/pcmC0D2c
+    chmod 0777 /dev/snd/pcmC0D3c
+    chmod 0777 /dev/snd/pcmC0D3p
+    chmod 0777 /dev/snd/pcmC0D4c
+    chmod 0777 /dev/snd/pcmC0D4p
+    chmod 0777 /dev/snd/pcmC0D5c
+    chmod 0777 /dev/snd/pcmC0D5p
+    chmod 0777 /dev/snd/timer
+
+    # Revert the boost_timeout to the default value of 3 sec. 
+    # Note this won't affect the prev boost request for boot time reduction
+    write /sys/devices/system/cpu/cpufreq/hotplug/boost_timeout 3000000
+
+    # OVATION use the path below for lcd brightness control
+    chown system system /sys/class/backlight/lcd-backlight/brightness
+
+on property:dev.bootcomplete=1
+    start bootcnt
+
+# Initialize the SGX driver
+service pvrsrvinit /vendor/bin/pvrsrvinit
+    class core
+    user root
+    group root
+    oneshot
+
+#shared transport user space mgr service for Bluetooth, FM and GPS
+service uim /system/bin/uim-sysfs
+    class main
+    user root
+    group bluetooth net_bt_admin
+
+service bootcnt /system/bin/clear_bootcnt.sh
+    class core
+    user root
+    group root
+    disabled
+    oneshot
+
+#service sdcard /system/bin/sdcard /data/media 1023 1023
+#    class main
+
+service p2p_supplicant /system/bin/wpa_supplicant -Dnl80211 -iwlan0 -c/data/misc/wifi/wpa_supplicant.conf
+    class main
+    socket wpa_wlan0 dgram 660 wifi wifi
+    disabled
+    oneshot
+
+service wpa_supplicant /system/bin/wpa_supplicant -Dnl80211 -iwlan0 -c/data/misc/wifi/wpa_supplicant.conf
+    class main
+    socket wpa_wlan0 dgram 660 wifi wifi
+    disabled
+    oneshot
+
+service dhcpcd_wlan0 /system/bin/dhcpcd -ABKL
+    class main
+    disabled
+    oneshot
+
+service iprenew_wlan0 /system/bin/dhcpcd -n
+    class main
+    disabled
+    oneshot
+
+on property:ro.debuggable=1
+    write /sys/class/android_usb/android0/enable 0
+    write /sys/class/android_usb/android0/idVendor 18D1
+    write /sys/class/android_usb/android0/idProduct D001
+    write /sys/class/android_usb/android0/functions adb
+    #write /sys/class/android_usb/android0/enable 1
+    write /sys/class/android_usb/android0/iManufacturer ${ro.product.manufacturer}
+    write /sys/class/android_usb/android0/iProduct ${ro.product.model}
+    write /sys/class/android_usb/android0/iSerial ${ro.serialno}
+    #start adbd
+    setprop service.adb.root 1
+
+on property:wlan.driver.status=ok
+    chown wifi wifi /sys/devices/platform/wl1271/bt_coex_state
+
+# Restart adbd so it can run as root
+on property:service.adb.root=1
+    write /sys/class/android_usb/android0/enable 0
+    restart adbd
+    write /sys/class/android_usb/android0/enable 1
+    
+on property:sys.boot_completed=1
