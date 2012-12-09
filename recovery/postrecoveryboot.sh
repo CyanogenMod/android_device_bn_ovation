@@ -12,14 +12,20 @@ if [ -f /boot/MLO -a -f /boot/u-boot.bin -a ! -e /dev/block/mmcblk1p2 ] ; then
    SDCARDSIZE=$(grep 'mmcblk1$' /proc/partitions | awk '{print $3}')
    umount /boot
 
-   if [ $SDCARDSIZE -ge 3800000 ] ; then
-      # more than 4G, let's be generous
+   if [ $SDCARDSIZE -ge 15000000 ] ; then
+      # more than 16G, let's be generous
+      echo -e "n\np\n2\n\n+800M\nn\np\n3\n\n+2048M\nn\ne\n\n\nn\n\n\nt\n5\nc\nw\n" | fdisk /dev/block/mmcblk1 >/dev/null
+
+      mkfs.vfat -n "CM10SDCARD" /dev/block/mmcblk1p5
+      mke2fs -T ext4 /dev/block/mmcblk1p3
+   elif [ $SDCARDSIZE -ge 1800000 ] ; then
+      # 2G or bigger, cannot be as generous
       echo -e "n\np\n2\n\n+800M\nn\np\n3\n\n+900M\nn\ne\n\n\nn\n\n\nt\n5\nc\nw\n" | fdisk /dev/block/mmcblk1 >/dev/null
 
-      mkdosfs -n "CM10SDCARD" /dev/block/mmcblk1p5
+      mkfs.vfat -n "CM10SDCARD" /dev/block/mmcblk1p5
       mke2fs -T ext4 /dev/block/mmcblk1p3
    else
-      echo "Don't really support less than 4G cards"
+      echo "Don't really support less than 2G cards"
    fi
 else
    umount /boot
