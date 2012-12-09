@@ -47,11 +47,15 @@ on fs
     mount vfat /dev/block/platform/omap/omap_hsmmc.1/by-name/rom /rom sync noatime nodiratime uid=1000,gid=1000,fmask=117,dmask=007
     mount vfat /dev/block/platform/omap/omap_hsmmc.1/by-name/bootdata /bootdata wait noatime nodiratime uid=1000,gid=1000,fmask=117,dmask=007
 
+    # Need to mount internal data partition to fet access to emulated sdcard.
+    mkdir /int-data
+    mount ext4 /dev/block/platform/omap/omap_hsmmc.1/by-name/userdata /int-data wait noatime nosuid nodev
+
 on post-fs-data
     # we will remap this as /mnt/sdcard with the sdcard fuse tool
-#    mkdir /data/media 0775 media_rw media_rw
-#    chown media_rw media_rw /data/media
-#    setprop vold.post_fs_data_done 1
+    mkdir /int-data/media 0775 media_rw media_rw
+    chown media_rw media_rw /int-data/media
+    setprop vold.post_fs_data_done 1
 
 on boot
     setprop ro.radio.noril yes
@@ -215,8 +219,8 @@ service bootcnt /system/bin/clear_bootcnt.sh
     disabled
     oneshot
 
-#service sdcard /system/bin/sdcard /data/media 1023 1023
-#    class main
+service sdcard /system/bin/sdcard /int-data/media 1023 1023
+    class main
 
 service p2p_supplicant /system/bin/wpa_supplicant -Dnl80211 -iwlan0 -c/data/misc/wifi/wpa_supplicant.conf
     class main
