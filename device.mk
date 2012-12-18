@@ -48,7 +48,6 @@ PRODUCT_COPY_FILES += \
 # Graphics
 PRODUCT_COPY_FILES += \
     $(DEVICE_FOLDER)/prebuilt/sgx/gralloc.omap4470.so:/system/vendor/lib/hw/gralloc.omap4.so \
-    $(DEVICE_FOLDER)/prebuilt/sgx/hwcomposer.omap4.so:/system/vendor/lib/hw/hwcomposer.omap4.so \
     $(DEVICE_FOLDER)/prebuilt/sgx/libEGL_POWERVR_SGX544_112.so:/system/vendor/lib/egl/libEGL_POWERVR_SGX544_112.so \
     $(DEVICE_FOLDER)/prebuilt/sgx/libGLESv1_CM_POWERVR_SGX544_112.so:/system/vendor/lib/egl/libGLESv1_CM_POWERVR_SGX544_112.so \
     $(DEVICE_FOLDER)/prebuilt/sgx/libGLESv2_POWERVR_SGX544_112.so:/system/vendor/lib/egl/libGLESv2_POWERVR_SGX544_112.so \
@@ -190,7 +189,7 @@ PRODUCT_PACKAGES += \
 	smc_pa_ctrl \
 	tf_daemon \
 	libtf_crypto_sst \
-#	hwcomposer.omap4 \
+	hwcomposer.omap4 \
 
 PRODUCT_PACKAGES += \
 	libjni_pinyinime \
