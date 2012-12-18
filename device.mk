@@ -139,7 +139,8 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
 	liblights.ovation \
 	power.ovation \
-	sensors.ovation
+	sensors.ovation \
+	fw-symlink
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \
@@ -222,7 +223,6 @@ PRODUCT_PROPERTY_OVERRIDES := \
 # TI-Connectivity
 PRODUCT_COPY_FILES += \
         $(DEVICE_FOLDER)/firmware/TIInit_7.6.15.bts:system/etc/firmware/TIInit_7.6.15.bts \
-        $(DEVICE_FOLDER)/firmware/wl1271-nvs_127x.bin:system/etc/firmware/ti-connectivity/wl1271-nvs.bin \
 	$(DEVICE_FOLDER)/firmware/wl1271-fw-multirole-plt.bin:system/etc/firmware/ti-connectivity/wl1271-fw-multirole-plt.bin \
 	$(DEVICE_FOLDER)/firmware/wl1271-fw-multirole-roc.bin:system/etc/firmware/ti-connectivity/wl1271-fw-multirole-roc.bin \
 	$(DEVICE_FOLDER)/firmware/wl127x-fw-4-mr.bin:system/etc/firmware/ti-connectivity/wl127x-fw-4-mr.bin \
