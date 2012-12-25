@@ -101,13 +101,14 @@ TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := ./device/bn/ovation/releasetools/ov
 # not tested at all
 TARGET_RELEASETOOL_IMG_FROM_TARGET_SCRIPT := ./device/bn/ovation/releasetools/ovation_img_from_target_files
 
-TARGET_KERNEL_CONFIG := cyanogenmod_ovation_defconfig
+TARGET_KERNEL_CONFIG := cyanogenmod_ovation_green_defconfig
 TARGET_KERNEL_SOURCE := kernel/bn/ovation
+TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.4.3
 
 SGX_MODULES:
 	cp kernel/bn/ovation/drivers/video/omap2/omapfb/omapfb.h $(KERNEL_OUT)/drivers/video/omap2/omapfb/omapfb.h
-	make ARCH="arm" -C kernel/bn/ovation/external/sgx/src/eurasia_km/eurasiacon/build/linux2/omap4430_android CROSS_COMPILE=arm-eabi- TARGET_PRODUCT="blaze_tablet" BUILD=release TARGET_SGX=540 PLATFORM_VERSION=4.0  KERNEL_CROSS_COMPILE=arm-eabi- KERNELDIR=$(KERNEL_OUT)
-	mv $(KERNEL_OUT)/../../target/kbuild/pvrsrvkm_sgx540_120.ko $(KERNEL_MODULES_OUT)
+	make ARCH="arm" -C kernel/bn/ovation/external/sgx/src/eurasia_km/eurasiacon/build/linux2/omap4430_android CROSS_COMPILE=arm-eabi- TARGET_PRODUCT="blaze_tablet" BUILD=release TARGET_SGX=544sc PLATFORM_VERSION=4.0  KERNEL_CROSS_COMPILE=arm-eabi- KERNELDIR=$(KERNEL_OUT)
+	mv $(KERNEL_OUT)/../../target/kbuild/pvrsrvkm_sgx544_112.ko $(KERNEL_MODULES_OUT)
 
 WIFI_MODULES:
 	make -C kernel/bn/ovation/external/wlan/mac80211/compat_wl12xx KERNEL_DIR=$(KERNEL_OUT) KLIB=$(KERNEL_OUT) KLIB_BUILD=$(KERNEL_OUT) ARCH=arm CROSS_COMPILE=arm-eabi-
@@ -118,7 +119,16 @@ WIFI_MODULES:
 	mv kernel/bn/ovation/external/wlan/mac80211/compat_wl12xx/drivers/net/wireless/wl12xx/wl12xx.ko $(KERNEL_MODULES_OUT)
 	mv kernel/bn/ovation/external/wlan/mac80211/compat_wl12xx/drivers/net/wireless/wl12xx/wl12xx_sdio.ko $(KERNEL_MODULES_OUT)
 
-TARGET_KERNEL_MODULES := SGX_MODULES WIFI_MODULES
+BT_MODULES:
+	make -C kernel/bn/ovation/external/wpan/bluetooth-compat KERNEL_DIR=$(KERNEL_OUT) KLIB=$(KERNEL_OUT) KLIB_BUILD=$(KERNEL_OUT) ARCH=arm CROSS_COMPILE=arm-eabi-
+	mv kernel/bn/ovation/external/wpan/bluetooth-compat/drivers/bluetooth/hci_uart.ko $(KERNEL_MODULES_OUT)
+	mv kernel/bn/ovation/external/wpan/bluetooth-compat/drivers/bluetooth/btwilink.ko $(KERNEL_MODULES_OUT)
+	mv kernel/bn/ovation/external/wpan/bluetooth-compat/net/bluetooth/bluetooth.ko $(KERNEL_MODULES_OUT)
+	mv kernel/bn/ovation/external/wpan/bluetooth-compat/net/bluetooth/hidp/hidp.ko $(KERNEL_MODULES_OUT)
+	mv kernel/bn/ovation/external/wpan/bluetooth-compat/net/bluetooth/bnep/bnep.ko $(KERNEL_MODULES_OUT)
+	mv kernel/bn/ovation/external/wpan/bluetooth-compat/net/bluetooth/rfcomm/rfcomm.ko $(KERNEL_MODULES_OUT)
+
+TARGET_KERNEL_MODULES := SGX_MODULES WIFI_MODULES BT_MODULES
 
 # Keep this as a fallback
 TARGET_PREBUILT_KERNEL := device/bn/ovation/kernel
