@@ -248,6 +248,7 @@
 #define PRODUCT_DEVICE_TABLET   "blaze_tablet"
 #define PRODUCT_DEVICE_OMAP5_SEVM   "omap5sevm"
 #define PRODUCT_DEVICE_OVATION      "ovation"
+#define PRODUCT_DEVICE_HUMMINGBIRD  "hummingbird"
 
 /* fm */
 static bool fm_enable = false;
@@ -258,6 +259,7 @@ enum supported_boards {
     OMAP4_TABLET,
     OMAP5_SEVM,
     OMAP4_OVATION,
+    OMAP4_HUMMINGBIRD,
 };
 
 enum tty_modes {
@@ -935,6 +937,10 @@ static int get_boardtype(struct omap_audio_device *adev)
             adev->board_type = OMAP4_OVATION;
             adev->sidetone_capture = 1;
     }
+    else if(!strcmp(board, PRODUCT_DEVICE_HUMMINGBIRD)) {
+            adev->board_type = OMAP4_HUMMINGBIRD;
+            adev->sidetone_capture = 1;
+    }
     else
         return -EINVAL;
 
@@ -1187,7 +1193,8 @@ static void set_input_volumes(struct omap_audio_device *adev, int main_mic_on,
                 volume = DB_TO_ABE_GAIN(main_mic_on ? CAPTURE_DIGITAL_MIC_VOLUME :
                     (headset_mic_on ? CAPTURE_HEADSET_MIC_VOLUME :
                      (sub_mic_on ? CAPTURE_SUB_MIC_VOLUME : 0)));
-            }else if(adev->board_type == OMAP4_OVATION) {
+            }else if(adev->board_type == OMAP4_OVATION ||
+		     adev->board_type == OMAP4_HUMMINGBIRD) {
                 volume = DB_TO_ABE_GAIN(main_mic_on ? CAPTURE_DIGITAL_MIC_VOLUME :
                     (headset_mic_on ? CAPTURE_HEADSET_MIC_VOLUME :
                      (sub_mic_on ? CAPTURE_SUB_MIC_VOLUME : 0)));
@@ -1223,7 +1230,8 @@ static void set_input_volumes(struct omap_audio_device *adev, int main_mic_on,
            (adev->board_type == OMAP5_SEVM)) {
             mixer_ctl_set_value(adev->mixer_ctls.amic_ul_volume, channel, volume);
         }else if((adev->board_type == OMAP4_TABLET) ||
-                 (adev->board_type == OMAP4_OVATION)) {
+                 (adev->board_type == OMAP4_OVATION) ||
+		 (adev->board_type == OMAP4_HUMMINGBIRD)) {
             if (headset_mic_on)
                 mixer_ctl_set_value(adev->mixer_ctls.amic_ul_volume, channel, volume);
             else
@@ -1456,7 +1464,8 @@ static void select_output_device(struct omap_audio_device *adev)
                     set_route_by_array(adev->mixer, vx_ul_amic_right, 1);
                 else if(adev->board_type == OMAP4_TABLET)
                     set_route_by_array(adev->mixer, vx_ul_dmic0,1);
-                else if(adev->board_type == OMAP4_OVATION)
+                else if(adev->board_type == OMAP4_OVATION ||
+			adev->board_type == OMAP4_HUMMINGBIRD)
                     set_route_by_array(adev->mixer, vx_ul_dmic0,1);
             }
             else {
@@ -1465,7 +1474,8 @@ static void select_output_device(struct omap_audio_device *adev)
                     set_route_by_array(adev->mixer, vx_ul_amic_left, 0);
                 else if(adev->board_type == OMAP4_TABLET)
                     set_route_by_array(adev->mixer, vx_ul_dmic0,0);
-                else if(adev->board_type == OMAP4_OVATION)
+                else if(adev->board_type == OMAP4_OVATION ||
+			adev->board_type == OMAP4_HUMMINGBIRD)
                     set_route_by_array(adev->mixer, vx_ul_dmic0,0);
             }
             if((adev->board_type == OMAP4_BLAZE) ||
@@ -1480,7 +1490,8 @@ static void select_output_device(struct omap_audio_device *adev)
                 mixer_ctl_set_enum_by_string(adev->mixer_ctls.left_capture,
                         (headset_on ? MIXER_HS_MIC : "Off"));
                 mixer_ctl_set_enum_by_string(adev->mixer_ctls.right_capture, "Off");
-            } else if(adev->board_type == OMAP4_OVATION) {
+            } else if(adev->board_type == OMAP4_OVATION ||
+		      adev->board_type == OMAP4_HUMMINGBIRD) {
                 mixer_ctl_set_enum_by_string(adev->mixer_ctls.left_capture,
                         (headset_on ? MIXER_HS_MIC : "Off"));
                 mixer_ctl_set_enum_by_string(adev->mixer_ctls.right_capture, "Off");
@@ -1590,7 +1601,8 @@ static void select_input_device(struct omap_audio_device *adev)
             mixer_ctl_set_enum_by_string(adev->mixer_ctls.left_capture,
                     main_mic_on ? "off" :
                     (headset_on ? MIXER_HS_MIC : "Off"));
-        } else if(adev->board_type == OMAP4_OVATION) {
+        } else if(adev->board_type == OMAP4_OVATION ||
+		  adev->board_type == OMAP4_HUMMINGBIRD) {
             /* Select front end */
             ALOGE(">>> [ASoC]select_input_device:: devices==%d, headset_on==%d, main_mic_on==%d, sub_mic_on==%d\n", adev->devices, headset_on, main_mic_on, sub_mic_on);
             if (main_mic_on || sub_mic_on || headset_on) {
