@@ -206,6 +206,7 @@ PRODUCT_PACKAGES += \
 	tinycap \
 	sh \
 	libwvm \
+	audio.primary.ovation \
 	audio_policy.default 
 
 PRODUCT_PROPERTY_OVERRIDES := \
@@ -246,10 +247,6 @@ PRODUCT_COPY_FILES += \
         $(DEVICE_FOLDER)/firmware/ini_files/TQS_D_1.7.ini:system/etc/firmware/ti-connectivity/ini_files/TQS_D_1.7.ini \
         $(DEVICE_FOLDER)/firmware/ini_files/TQS_S_2.5.ini:system/etc/firmware/ti-connectivity/ini_files/TQS_S_2.5.ini \
         $(DEVICE_FOLDER)/firmware/ini_files/TQS_S_2.6.ini:system/etc/firmware/ti-connectivity/ini_files/TQS_S_2.6.ini \
-
-# Audio lib
-PRODUCT_COPY_FILES += \
-	$(DEVICE_FOLDER)/prebuilt/audio.primary.ovation.so:system/lib/hw/audio.primary.ovation.so
 
 # enable Google-specific location features,
 # like NetworkLocationProvider and LocationCollector

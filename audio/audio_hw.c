@@ -78,7 +78,6 @@
 #define MIXER_EARPHONE_PLAYBACK_VOLUME      "Earphone Playback Volume"
 #define MIXER_BT_UL_VOLUME                  "BT UL Volume"
 
-#define MIXER_DL1_EQUALIZER                 "DL1 Equalizer"
 #define MIXER_DL1_MIXER_MULTIMEDIA          "DL1 Mixer Multimedia"
 #define MIXER_DL1_MIXER_CAPTURE             "DL1 Mixer Capture"
 #define MIXER_DL1_MIXER_VOICE               "DL1 Mixer Voice"
@@ -94,13 +93,15 @@
 #define MIXER_DL1_MM_EXT_SWITCH             "DL1 MM_EXT Switch"
 #define MIXER_VOICE_CAPTURE_MIXER_CAPTURE   "Voice Capture Mixer Capture"
 
-#define MIXER_HS_LEFT_PLAYBACK              "HS Left Playback"
-#define MIXER_HS_RIGHT_PLAYBACK             "HS Right Playback"
-#define MIXER_HF_LEFT_PLAYBACK              "HF Left Playback"
-#define MIXER_HF_RIGHT_PLAYBACK             "HF Right Playback"
-#define MIXER_EARPHONE_ENABLE_SWITCH        "Earphone Enable Switch"
+#define MIXER_HS_LEFT_PLAYBACK              "Headset Left Playback"
+#define MIXER_HS_RIGHT_PLAYBACK             "Headset Right Playback"
+#define MIXER_HF_LEFT_PLAYBACK              "Handsfree Left Playback"
+#define MIXER_HF_RIGHT_PLAYBACK             "Handsfree Right Playback"
+#define MIXER_EARPHONE_ENABLE_SWITCH        "Earphone Playback Switch"
 #define MIXER_HS_POWER_MODE                 "Headset Power Mode"
 #define MIXER_HS_LOW_POWER_MODE             "Low-Power"
+#define MIXER_SPK_RIGHT_ENABLE_SWITCH       "Spk Right Playback Switch"
+#define MIXER_SPK_LEFT_ENABLE_SWITCH        "Spk Left Playback Switch"
 
 #define MIXER_ANALOG_LEFT_CAPTURE_ROUTE     "Analog Left Capture Route"
 #define MIXER_ANALOG_RIGHT_CAPTURE_ROUTE    "Analog Right Capture Route"
@@ -133,6 +134,8 @@
 #define MIXER_AMIC1                         "AMic1"
 #define MIXER_DMIC0L                        "DMic0L"
 #define MIXER_DMIC0R                        "DMic0R"
+#define MIXER_DMIC1L                        "DMic1L"
+#define MIXER_DMIC2R                        "DMic2R"
 #define MIXER_BT_LEFT                       "BT Left"
 #define MIXER_BT_RIGHT                      "BT Right"
 #define MIXER_AUX_LEFT                      "Aux/FM Left"
@@ -141,31 +144,10 @@
 #define MIXER_MMEXTL                        "MMExt Left"
 #define MIXER_450HZ_HIGH_PASS               "450Hz High-pass"
 #define MIXER_0DB_HIGH_PASS                 "High-pass 0dB"
-#define MIXER_FLAT_RESPONSE                 "Flat Response"
+#define MIXER_FLAT_RESPONSE                 "Flat response"
 #define MIXER_4KHZ_LPF_0DB                  "4Khz LPF   0dB"
 #define MIXER_VX_RIGHT                      "VX Right"
 #define MIXER_VX_LEFT                       "VX Left"
-
-/* Codec controls */
-#define SP_DRIVER_MUTE 						"SP driver mute"
-#define SP_ANALOG_GAIN						"SP Analog Gain"
-#define DAC_PLAYBACK_VOLUME					"DAC Playback Volume"
-#define RIGHT_DAC_INPUT_SELECTION			"Right DAC input selection"
-#define LEFT_DAC_INPUT_SELECTION			"Left DAC input selection"
-#define DAC_L_TO_LEFT_OUTPUT_MIXER			"Left Output Mixer From DAC_L"
-#define DAC_R_TO_RIGHT_OUTPUT_MIXER			"Right Output Mixer From DAC_R"
-#define HP_DRIVER_MUTE 						"HP driver mute"
-#define HP_ANALOG_GAIN						"HP Analog Gain"
-#define HP_CM_VOLTAGE_CTL					"HP Output common - mode voltage control"
-#define M_INPUT_MIXER						"M_Input_Mixer CM_PGA_CNTL"
-#define P_INPUT_MIXER						"P_Input_Mixer MIC1LM_PGA_CNTL"
-#define MIC_PGA_GAIN						"ADC MIC_PGA GAIN"
-#define ADC_COARSE_GAIN						"ADC COARSE GAIN"
-#define DL1_MM_EXT_SWITCH					"DL1 MM_EXT Switch"
-
-#define RIGHT_DATA							"right data"
-#define LEFT_DATA							"left data"
-#define VOLTAGE								"5 V "
 
 /* ALSA cards for OMAP */
 #define CARD_OMAP_ABE 0
@@ -265,7 +247,7 @@
 #define PRODUCT_DEVICE_BLAZE    "blaze"
 #define PRODUCT_DEVICE_TABLET   "blaze_tablet"
 #define PRODUCT_DEVICE_OMAP5_SEVM   "omap5sevm"
-#define PRODUCT_DEVICE_ACCLAIM      "ovation"
+#define PRODUCT_DEVICE_OVATION      "ovation"
 
 /* fm */
 static bool fm_enable = false;
@@ -275,7 +257,7 @@ enum supported_boards {
     OMAP4_BLAZE,
     OMAP4_TABLET,
     OMAP5_SEVM,
-    OMAP4_ACCLAIM,
+    OMAP4_OVATION,
 };
 
 enum tty_modes {
@@ -324,30 +306,22 @@ struct route_setting defaults[] = {
 
     {
         .ctl_name = MIXER_DL2_LEFT_EQUALIZER,
-        .strval = MIXER_0DB_HIGH_PASS,
+        .strval = MIXER_FLAT_RESPONSE,
     },
     {
         .ctl_name = MIXER_DL2_RIGHT_EQUALIZER,
-        .strval = MIXER_0DB_HIGH_PASS,
+        .strval = MIXER_FLAT_RESPONSE,
     },
     {
         .ctl_name = MIXER_DL1_EQUALIZER,
-        .strval = MIXER_0DB_HIGH_PASS,
+        .strval = MIXER_FLAT_RESPONSE,
     },
     {
         .ctl_name = MIXER_DL1_MEDIA_PLAYBACK_VOLUME,
         .intval = MIXER_ABE_GAIN_0DB - 2,
     },
     {
-        .ctl_name = MIXER_DL2_MEDIA_PLAYBACK_VOLUME,
-        .intval = MIXER_ABE_GAIN_0DB - 2,
-    },
-    {
         .ctl_name = MIXER_DL1_VOICE_PLAYBACK_VOLUME,
-        .intval = MIXER_ABE_GAIN_0DB,
-    },
-    {
-        .ctl_name = MIXER_DL2_VOICE_PLAYBACK_VOLUME,
         .intval = MIXER_ABE_GAIN_0DB,
     },
     {
@@ -416,19 +390,11 @@ struct route_setting hf_dl1[] = {
 struct route_setting hf_dl2[] = {
     {
         .ctl_name = MIXER_DL2_LEFT_EQUALIZER,
-        .strval = MIXER_0DB_HIGH_PASS,
+        .strval = MIXER_FLAT_RESPONSE,
     },
     {
         .ctl_name = MIXER_DL2_RIGHT_EQUALIZER,
-        .strval = MIXER_0DB_HIGH_PASS,
-    },
-    {
-        .ctl_name = MIXER_DL2_MEDIA_PLAYBACK_VOLUME,
-        .intval = MIXER_ABE_GAIN_0DB - 2,
-    },
-    {
-        .ctl_name = MIXER_DL2_VOICE_PLAYBACK_VOLUME,
-        .intval = MIXER_ABE_GAIN_0DB,
+        .strval = MIXER_FLAT_RESPONSE,
     },
     {
         .ctl_name = NULL,
@@ -539,6 +505,21 @@ struct route_setting mm_ul2_fmradio_digital[] = {
         .ctl_name = NULL,
      },
 };
+
+struct route_setting mm_ul2_dmic1_left[] = {
+    {
+        .ctl_name = MIXER_MUX_UL10,
+        .strval = MIXER_DMIC1L,
+    },
+    {
+        .ctl_name = MIXER_MUX_UL11,
+        .strval = MIXER_DMIC1L,
+    },
+    {
+        .ctl_name = NULL,
+    },
+};
+
 struct route_setting mm_ul2_amic_left[] = {
     {
         .ctl_name = MIXER_MUX_UL10,
@@ -711,34 +692,6 @@ struct route_setting vx_rec_dl[] = {
     },
 };
 
-struct route_setting codec_output_controls[] = {
-	{ .ctl_name = SP_DRIVER_MUTE ,               .intval = 1, },
-	{ .ctl_name = SP_ANALOG_GAIN,                .intval = 127, },
-	{ .ctl_name = DAC_PLAYBACK_VOLUME,           .intval = 140, },
-	{ .ctl_name = RIGHT_DAC_INPUT_SELECTION,     .strval = RIGHT_DATA, },
-	{ .ctl_name = LEFT_DAC_INPUT_SELECTION,      .strval = LEFT_DATA, },
-	{ .ctl_name = DAC_L_TO_LEFT_OUTPUT_MIXER,    .intval = 1, },
-	{ .ctl_name = DAC_R_TO_RIGHT_OUTPUT_MIXER,   .intval = 1, },
-	{ .ctl_name = HP_DRIVER_MUTE,                .intval = 1, },
-	{ .ctl_name = HP_ANALOG_GAIN,                .intval = 127, },
-	{ .ctl_name = HP_CM_VOLTAGE_CTL,             .strval = VOLTAGE, },
-	{ .ctl_name = MIXER_DL1_MIXER_MULTIMEDIA,    .intval = 1, },
-	{ .ctl_name = MIXER_SIDETONE_MIXER_PLAYBACK, .intval = 1, },
-	{ .ctl_name = DL1_MM_EXT_SWITCH,             .intval = 1, },
-    { .ctl_name = NULL, },
-};
-
-struct route_setting codec_input_controls[] = {
-    { .ctl_name = M_INPUT_MIXER,                .intval = 2, },
-    { .ctl_name = P_INPUT_MIXER,                .intval = 2, },
-    { .ctl_name = MIC_PGA_GAIN,                 .intval = 50, },
- 	{ .ctl_name = ADC_COARSE_GAIN,              .intval = 48, },
-	{ .ctl_name = MIXER_SIDETONE_MIXER_CAPTURE, .intval = 1, },
-    { .ctl_name = MIXER_AUDUL_VOICE_UL_VOLUME,  .intval = MIXER_ABE_GAIN_0DB, },
-    { .ctl_name = MIXER_SDT_UL_VOLUME,          .intval = MIXER_ABE_GAIN_0DB, },
-    { .ctl_name = NULL, },
-};
-
 struct buffer_remix;
 
 /* buffer_remix: functor for doing in-place buffer manipulations.
@@ -785,6 +738,8 @@ struct mixer_ctls
     struct mixer_ctl *earpiece_enable;
     struct mixer_ctl *headset_volume;
     struct mixer_ctl *speaker_volume;
+    struct mixer_ctl *left_spk_enable;
+    struct mixer_ctl *right_spk_enable;
 };
 
 struct omap_audio_device {
@@ -976,9 +931,9 @@ static int get_boardtype(struct omap_audio_device *adev)
             adev->board_type = OMAP5_SEVM;
             adev->sidetone_capture = 1;
     }
-    else if(!strcmp(board, PRODUCT_DEVICE_ACCLAIM)) {
-            adev->board_type = OMAP4_ACCLAIM;
-            adev->sidetone_capture = 0;
+    else if(!strcmp(board, PRODUCT_DEVICE_OVATION)) {
+            adev->board_type = OMAP4_OVATION;
+            adev->sidetone_capture = 1;
     }
     else
         return -EINVAL;
@@ -995,6 +950,7 @@ static int set_route_by_array(struct mixer *mixer, struct route_setting *route,
 {
     struct mixer_ctl *ctl;
     unsigned int i, j;
+    int rc;
 
     LOGFUNC("%s(%p, %p, %d)", __FUNCTION__, mixer, route, enable);
 
@@ -1002,21 +958,38 @@ static int set_route_by_array(struct mixer *mixer, struct route_setting *route,
     i = 0;
     while (route[i].ctl_name) {
         ctl = mixer_get_ctl_by_name(mixer, route[i].ctl_name);
-        if (!ctl)
+        if (!ctl) {
+	    ALOGE("mixer setting - error looking up control %s\n", route[i].ctl_name);
             return -EINVAL;
+	}
+
+	//ALOGI("Setting %s to %s or %d, enable %d\n", route[i].ctl_name, route[i].strval, route[i].intval, enable);
 
         if (route[i].strval) {
-            if (enable)
-                mixer_ctl_set_enum_by_string(ctl, route[i].strval);
-            else
-                mixer_ctl_set_enum_by_string(ctl, "Off");
+            if (enable) {
+                rc = mixer_ctl_set_enum_by_string(ctl, route[i].strval);
+		if (rc)
+		    ALOGE("mixer setting error for %s, val %s, err %d\n", route[i].ctl_name, route[i].strval, rc);
+	    } else {
+		/* Temp cludge - B&N kernel devines MUX_* off as None.
+		 * Need to fix this in their kernel source eventually.
+		 */
+		rc = mixer_ctl_set_enum_by_string(ctl, strncmp(route[i].ctl_name, "MUX_", 4)?"Off":"None");
+		if (rc)
+		    ALOGE("mixer setting error for %s, to Off , err %d\n", route[i].ctl_name, rc);
+	    }
         } else {
             /* This ensures multiple (i.e. stereo) values are set jointly */
             for (j = 0; j < mixer_ctl_get_num_values(ctl); j++) {
-                if (enable)
-                    mixer_ctl_set_value(ctl, j, route[i].intval);
-                else
-                    mixer_ctl_set_value(ctl, j, 0);
+                if (enable) {
+                    rc = mixer_ctl_set_value(ctl, j, route[i].intval);
+		    if (rc)
+			ALOGE("mixer setting error for %s[%d], val %d, err %d\n", route[i].ctl_name, j, route[i].intval, rc);
+                } else {
+		    rc = mixer_ctl_set_value(ctl, j, 0);
+		    if (rc)
+			ALOGE("mixer setting error for %s[%d], to 0 , err %d\n", route[i].ctl_name, j, rc);
+		}
             }
         }
         i++;
@@ -1214,7 +1187,7 @@ static void set_input_volumes(struct omap_audio_device *adev, int main_mic_on,
                 volume = DB_TO_ABE_GAIN(main_mic_on ? CAPTURE_DIGITAL_MIC_VOLUME :
                     (headset_mic_on ? CAPTURE_HEADSET_MIC_VOLUME :
                      (sub_mic_on ? CAPTURE_SUB_MIC_VOLUME : 0)));
-            }else if(adev->board_type == OMAP4_ACCLAIM) {
+            }else if(adev->board_type == OMAP4_OVATION) {
                 volume = DB_TO_ABE_GAIN(main_mic_on ? CAPTURE_DIGITAL_MIC_VOLUME :
                     (headset_mic_on ? CAPTURE_HEADSET_MIC_VOLUME :
                      (sub_mic_on ? CAPTURE_SUB_MIC_VOLUME : 0)));
@@ -1250,11 +1223,11 @@ static void set_input_volumes(struct omap_audio_device *adev, int main_mic_on,
            (adev->board_type == OMAP5_SEVM)) {
             mixer_ctl_set_value(adev->mixer_ctls.amic_ul_volume, channel, volume);
         }else if((adev->board_type == OMAP4_TABLET) ||
-                 (adev->board_type == OMAP4_ACCLAIM)) {
+                 (adev->board_type == OMAP4_OVATION)) {
             if (headset_mic_on)
                 mixer_ctl_set_value(adev->mixer_ctls.amic_ul_volume, channel, volume);
             else
-                mixer_ctl_set_value(adev->mixer_ctls.dmic1_ul_volume, channel, volume);
+                mixer_ctl_set_value(adev->mixer_ctls.dmic1_ul_volume, channel, volume+1);
         }
     }
 }
@@ -1410,12 +1383,9 @@ static void select_output_device(struct omap_audio_device *adev)
         }
     }
 
-    dl1_on = headset_on | headphone_on | earpiece_on | bt_on;
+    dl1_on = headset_on | headphone_on | earpiece_on | bt_on | speaker_on;
 
     /* Select front end */
-    mixer_ctl_set_value(adev->mixer_ctls.mm_dl2, 0, speaker_on);
-    mixer_ctl_set_value(adev->mixer_ctls.vx_dl2, 0,
-                        speaker_on && (adev->mode == AUDIO_MODE_IN_CALL));
     mixer_ctl_set_value(adev->mixer_ctls.mm_dl1, 0, dl1_on);
     mixer_ctl_set_value(adev->mixer_ctls.vx_dl1, 0,
                         dl1_on && (adev->mode == AUDIO_MODE_IN_CALL));
@@ -1424,11 +1394,12 @@ static void select_output_device(struct omap_audio_device *adev)
                         headset_on | headphone_on | earpiece_on);
     mixer_ctl_set_value(adev->mixer_ctls.dl1_bt, 0, bt_on);
     mixer_ctl_set_value(adev->mixer_ctls.earpiece_enable, 0, earpiece_on);
+    mixer_ctl_set_value(adev->mixer_ctls.right_spk_enable, 0, speaker_on);
+    mixer_ctl_set_value(adev->mixer_ctls.left_spk_enable, 0, speaker_on);
 
     /* select output stage */
     set_route_by_array(adev->mixer, hs_output, headset_on | headphone_on);
     set_route_by_array(adev->mixer, hf_output, speaker_on);
-	set_route_by_array(adev->mixer, codec_output_controls, headset_on | headphone_on | speaker_on);
 
 #if 0
     if (fmtx_on)
@@ -1485,7 +1456,7 @@ static void select_output_device(struct omap_audio_device *adev)
                     set_route_by_array(adev->mixer, vx_ul_amic_right, 1);
                 else if(adev->board_type == OMAP4_TABLET)
                     set_route_by_array(adev->mixer, vx_ul_dmic0,1);
-                else if(adev->board_type == OMAP4_ACCLAIM)
+                else if(adev->board_type == OMAP4_OVATION)
                     set_route_by_array(adev->mixer, vx_ul_dmic0,1);
             }
             else {
@@ -1494,7 +1465,7 @@ static void select_output_device(struct omap_audio_device *adev)
                     set_route_by_array(adev->mixer, vx_ul_amic_left, 0);
                 else if(adev->board_type == OMAP4_TABLET)
                     set_route_by_array(adev->mixer, vx_ul_dmic0,0);
-                else if(adev->board_type == OMAP4_ACCLAIM) 
+                else if(adev->board_type == OMAP4_OVATION)
                     set_route_by_array(adev->mixer, vx_ul_dmic0,0);
             }
             if((adev->board_type == OMAP4_BLAZE) ||
@@ -1509,7 +1480,7 @@ static void select_output_device(struct omap_audio_device *adev)
                 mixer_ctl_set_enum_by_string(adev->mixer_ctls.left_capture,
                         (headset_on ? MIXER_HS_MIC : "Off"));
                 mixer_ctl_set_enum_by_string(adev->mixer_ctls.right_capture, "Off");
-            } else if(adev->board_type == OMAP4_ACCLAIM) {
+            } else if(adev->board_type == OMAP4_OVATION) {
                 mixer_ctl_set_enum_by_string(adev->mixer_ctls.left_capture,
                         (headset_on ? MIXER_HS_MIC : "Off"));
                 mixer_ctl_set_enum_by_string(adev->mixer_ctls.right_capture, "Off");
@@ -1619,20 +1590,21 @@ static void select_input_device(struct omap_audio_device *adev)
             mixer_ctl_set_enum_by_string(adev->mixer_ctls.left_capture,
                     main_mic_on ? "off" :
                     (headset_on ? MIXER_HS_MIC : "Off"));
-        } else if(adev->board_type == OMAP4_ACCLAIM) {
+        } else if(adev->board_type == OMAP4_OVATION) {
             /* Select front end */
             ALOGE(">>> [ASoC]select_input_device:: devices==%d, headset_on==%d, main_mic_on==%d, sub_mic_on==%d\n", adev->devices, headset_on, main_mic_on, sub_mic_on);
             if (main_mic_on || sub_mic_on || headset_on) {
-                set_route_by_array(adev->mixer, mm_ul2_dmic0, 1);
+                set_route_by_array(adev->mixer, mm_ul2_dmic1_left, 1);
                 // hw_is_stereo_only = 1;
-            }
+            } else {
+                set_route_by_array(adev->mixer, mm_ul2_dmic1_left, 0);
+	    }
 
             /* Select back end */
             mixer_ctl_set_enum_by_string(adev->mixer_ctls.right_capture, "off");
             mixer_ctl_set_enum_by_string(adev->mixer_ctls.left_capture,
                     main_mic_on ? "off" :
                     (headset_on ? MIXER_HS_MIC : "Off"));
-            set_route_by_array(adev->mixer, codec_input_controls, 1);
         }
     }
 
@@ -1749,7 +1721,7 @@ static size_t get_input_buffer_size(uint32_t sample_rate, int format, int channe
     /* take resampling into account and return the closest majoring
     multiple of 16 frames, as audioflinger expects audio buffers to
     be a multiple of 16 frames */
-    size = (pcm_config_mm_ul.period_size * sample_rate) / pcm_config_mm_ul.rate;
+    size = (pcm_config_mm.period_size * sample_rate) / pcm_config_mm.rate;
     size = ((size + 15) / 16) * 16;
 
     return size * channel_count * sizeof(short);
@@ -2240,7 +2212,7 @@ static int start_input_stream(struct omap_stream_in *in)
 {
     int ret = 0;
     unsigned int card = CARD_OMAP_DEFAULT;
-    unsigned int device = PORT_MM2_UL;
+    unsigned int device = PORT_MM;
     struct omap_audio_device *adev = in->dev;
     unsigned int vx_rec_ul_on = (in->source == AUDIO_SOURCE_VOICE_UPLINK) ||
             (in->source == AUDIO_SOURCE_VOICE_CALL);
@@ -3358,7 +3330,7 @@ static int adev_open_input_stream(struct audio_hw_device *dev,
 
     in->requested_rate = config->sample_rate;
 
-    memcpy(&in->config, &pcm_config_mm_ul, sizeof(pcm_config_mm_ul));
+    memcpy(&in->config, &pcm_config_mm, sizeof(pcm_config_mm));
     in->config.channels = channel_count;
 
     in->buffer = malloc(2 * in->config.period_size * audio_stream_frame_size(&in->stream.common));
@@ -3574,6 +3546,10 @@ static int adev_open(const hw_module_t* module, const char* name,
                                            MIXER_HEADSET_PLAYBACK_VOLUME);
     adev->mixer_ctls.speaker_volume = mixer_get_ctl_by_name(adev->mixer,
                                            MIXER_HANDSFREE_PLAYBACK_VOLUME);
+    adev->mixer_ctls.right_spk_enable = mixer_get_ctl_by_name(adev->mixer,
+                                           MIXER_SPK_RIGHT_ENABLE_SWITCH);
+    adev->mixer_ctls.left_spk_enable = mixer_get_ctl_by_name(adev->mixer,
+                                           MIXER_SPK_LEFT_ENABLE_SWITCH);
 
     if (adev->mixer_ctls.mm_dl2 && adev->mixer_ctls.vx_dl2 &&
         adev->mixer_ctls.dl2_mono) {
