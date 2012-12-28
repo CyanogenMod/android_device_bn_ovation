@@ -213,12 +213,10 @@ PRODUCT_PROPERTY_OVERRIDES := \
 	ro.sf.lcd_density=240 \
 	wifi.interface=wlan0 \
 	wifi.supplicant_scan_interval=45 \
-	persist.sys.usb.config=mass_storage,adb \
 	com.ti.omap_enhancement=true \
 	omap.enhancement=true \
 	ro.crypto.state=unencrypted \
-	persist.sys.root_access=3 \
-	ro.hwc.legacy_api=true
+	persist.sys.root_access=3
 
 # TI-Connectivity
 PRODUCT_COPY_FILES += \
