@@ -146,7 +146,7 @@ void Kxtf9Sensor::processEvent(int code, int value)
             mPendingEvent.acceleration.y = value * CONVERT_A_Y;
             break;
         case EVENT_TYPE_ACCEL_Z:
-            mPendingEvent.acceleration.z = value * CONVERT_A_Z;
+            mPendingEvent.acceleration.z = -value * CONVERT_A_Z;
             break;
     }
 }
