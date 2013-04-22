@@ -84,6 +84,8 @@ BOARD_EGL_CFG := device/bn/ovation/prebuilt/etc/egl.cfg
 OMAP_ENHANCEMENT := true
 OMAP_ENHANCEMENT_MULTIGPU := true
 ENHANCED_DOMX := true
+TI_CUSTOM_DOMX_PATH := $(DEVICE_FOLDER)/domx
+DOMX_PATH := $(DEVICE_FOLDER)/domx
 
 # Recovery
 BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/bn/ovation/recovery/recovery_ui.c
