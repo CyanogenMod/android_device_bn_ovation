@@ -744,6 +744,11 @@ struct mixer_ctls
     struct mixer_ctl *right_spk_enable;
 };
 
+struct audio_devices {
+    int out_devices;
+    int in_devices;
+};
+
 struct omap_audio_device {
     struct audio_hw_device hw_device;
 
@@ -751,8 +756,8 @@ struct omap_audio_device {
     struct mixer *mixer;
     struct mixer_ctls mixer_ctls;
     int mode;
-    int devices;
-    int cur_devices;
+    struct audio_devices devices;
+    struct audio_devices cur_devices;
     struct pcm *pcm_modem_dl;
     struct pcm *pcm_modem_ul;
     int in_call;
@@ -1068,7 +1073,7 @@ static void set_eq_filter(struct omap_audio_device *adev)
     LOGFUNC("%s(%p)", __FUNCTION__, adev);
 
     /* DL1_EQ can't be used for bt */
-    int dl1_eq_applicable = adev->devices & (AUDIO_DEVICE_OUT_WIRED_HEADSET |
+    int dl1_eq_applicable = adev->devices.out_devices & (AUDIO_DEVICE_OUT_WIRED_HEADSET |
                     AUDIO_DEVICE_OUT_WIRED_HEADPHONE | AUDIO_DEVICE_OUT_EARPIECE);
 
     /* 4Khz LPF is used only in NB-AMR voicecall */
@@ -1123,7 +1128,7 @@ static void set_incall_device(struct omap_audio_device *adev)
     }
     LOGFUNC("%s(%p)", __FUNCTION__, adev);
 
-    switch(adev->devices & AUDIO_DEVICE_OUT_ALL) {
+    switch(adev->devices.out_devices & AUDIO_DEVICE_OUT_ALL) {
         case AUDIO_DEVICE_OUT_EARPIECE:
             device_type = SOUND_AUDIO_PATH_HANDSET;
             break;
@@ -1248,7 +1253,7 @@ static void set_output_volumes(struct omap_audio_device *adev)
 
     speaker_volume = adev->mode == AUDIO_MODE_IN_CALL ? VOICE_CALL_SPEAKER_VOLUME :
                                                         NORMAL_SPEAKER_VOLUME;
-    headset_volume = adev->devices & AUDIO_DEVICE_OUT_WIRED_HEADSET ?
+    headset_volume = adev->devices.out_devices & AUDIO_DEVICE_OUT_WIRED_HEADSET ?
                                                         HEADSET_VOLUME :
                                                         HEADPHONE_VOLUME;
 
@@ -1299,11 +1304,12 @@ static void select_mode(struct omap_audio_device *adev)
             a call. This works because we're sure that the audio policy
             manager will update the output device after the audio mode
             change, even if the device selection did not change. */
-            if ((adev->devices & AUDIO_DEVICE_OUT_ALL) == AUDIO_DEVICE_OUT_SPEAKER)
-                adev->devices = AUDIO_DEVICE_OUT_EARPIECE |
-                                AUDIO_DEVICE_IN_BUILTIN_MIC;
-            else
-                adev->devices &= ~AUDIO_DEVICE_OUT_SPEAKER;
+            if ((adev->devices.out_devices & AUDIO_DEVICE_OUT_ALL) == AUDIO_DEVICE_OUT_SPEAKER) {
+                adev->devices.out_devices = AUDIO_DEVICE_OUT_EARPIECE;
+                adev->devices.in_devices = AUDIO_DEVICE_IN_BUILTIN_MIC & ~AUDIO_DEVICE_BIT_IN;
+            } else {
+                adev->devices.out_devices &= ~AUDIO_DEVICE_OUT_SPEAKER;
+	    }
             select_output_device(adev);
             if (adev->modem) {
                 ril_set_call_clock_sync(&adev->ril, SOUND_CLOCK_START);
@@ -1360,12 +1366,12 @@ static void select_output_device(struct omap_audio_device *adev)
             set_voice_volume(&adev->hw_device, 0);
     }
 
-    headset_on = adev->devices & AUDIO_DEVICE_OUT_WIRED_HEADSET;
-    headphone_on = adev->devices & AUDIO_DEVICE_OUT_WIRED_HEADPHONE;
-    speaker_on = adev->devices & AUDIO_DEVICE_OUT_SPEAKER;
-    earpiece_on = adev->devices & AUDIO_DEVICE_OUT_EARPIECE;
-    bt_on = adev->devices & AUDIO_DEVICE_OUT_ALL_SCO;
-    fmtx_on = adev->devices & AUDIO_DEVICE_OUT_FM_RADIO_TX;
+    headset_on = adev->devices.out_devices & AUDIO_DEVICE_OUT_WIRED_HEADSET;
+    headphone_on = adev->devices.out_devices & AUDIO_DEVICE_OUT_WIRED_HEADPHONE;
+    speaker_on = adev->devices.out_devices & AUDIO_DEVICE_OUT_SPEAKER;
+    earpiece_on = adev->devices.out_devices & AUDIO_DEVICE_OUT_EARPIECE;
+    bt_on = adev->devices.out_devices & AUDIO_DEVICE_OUT_ALL_SCO;
+    fmtx_on = adev->devices.out_devices & AUDIO_DEVICE_OUT_FM_RADIO_TX;
 
     /* force rx path according to TTY mode when in call */
     if (adev->mode == AUDIO_MODE_IN_CALL && !bt_on) {
@@ -1531,9 +1537,9 @@ static void select_input_device(struct omap_audio_device *adev)
     int headset_on = 0;
     int main_mic_on = 0;
     int sub_mic_on = 0;
-    int bt_on = adev->devices & AUDIO_DEVICE_IN_ALL_SCO;
+    int bt_on = adev->devices.in_devices & AUDIO_DEVICE_IN_ALL_SCO;
     int hw_is_stereo_only = 0;
-    int fm_rx_on = adev->devices & AUDIO_DEVICE_IN_FM_RADIO_RX;
+    int fm_rx_on = adev->devices.in_devices & AUDIO_DEVICE_IN_FM_RADIO_RX;
 
     LOGFUNC("%s(%p)", __FUNCTION__, adev);
 
@@ -1541,12 +1547,12 @@ static void select_input_device(struct omap_audio_device *adev)
         if ((adev->mode != AUDIO_MODE_IN_CALL) && (adev->active_input != 0)) {
             /* sub mic is used for camcorder or VoIP on speaker phone */
             sub_mic_on = (adev->active_input->source == AUDIO_SOURCE_CAMCORDER) ||
-                ((adev->devices & AUDIO_DEVICE_OUT_SPEAKER) &&
+                ((adev->devices.out_devices & AUDIO_DEVICE_OUT_SPEAKER) &&
                  (adev->active_input->source == AUDIO_SOURCE_VOICE_COMMUNICATION));
         }
         if (!sub_mic_on) {
-            headset_on = adev->devices & AUDIO_DEVICE_IN_WIRED_HEADSET;
-            main_mic_on = adev->devices & AUDIO_DEVICE_IN_BUILTIN_MIC;
+            headset_on = adev->devices.in_devices & AUDIO_DEVICE_IN_WIRED_HEADSET;
+            main_mic_on = adev->devices.in_devices & AUDIO_DEVICE_IN_BUILTIN_MIC;
         }
     }
 
@@ -1604,7 +1610,7 @@ static void select_input_device(struct omap_audio_device *adev)
         } else if(adev->board_type == OMAP4_OVATION ||
 		  adev->board_type == OMAP4_HUMMINGBIRD) {
             /* Select front end */
-            ALOGE(">>> [ASoC]select_input_device:: devices==%d, headset_on==%d, main_mic_on==%d, sub_mic_on==%d\n", adev->devices, headset_on, main_mic_on, sub_mic_on);
+            ALOGE(">>> [ASoC]select_input_device:: in_devices==%d, headset_on==%d, main_mic_on==%d, sub_mic_on==%d\n", adev->devices.in_devices, headset_on, main_mic_on, sub_mic_on);
             if (main_mic_on || sub_mic_on || headset_on) {
                 set_route_by_array(adev->mixer, mm_ul2_dmic1_left, 1);
                 // hw_is_stereo_only = 1;
@@ -1650,8 +1656,8 @@ static int start_output_stream(struct omap_stream_out *out)
         select_output_device(adev);
     }
 
-    if((adev->devices & AUDIO_DEVICE_OUT_ANLG_DOCK_HEADSET) ||
-        (adev->devices & AUDIO_DEVICE_OUT_DGTL_DOCK_HEADSET)) {
+    if((adev->devices.out_devices & AUDIO_DEVICE_OUT_ANLG_DOCK_HEADSET) ||
+        (adev->devices.out_devices & AUDIO_DEVICE_OUT_DGTL_DOCK_HEADSET)) {
         card = CARD_OMAP_USB;
         port = PORT_MM;
     }
@@ -1957,7 +1963,7 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
         val = atoi(value);
         pthread_mutex_lock(&adev->lock);
         pthread_mutex_lock(&out->lock);
-        if (((adev->devices & AUDIO_DEVICE_OUT_ALL) != val) && (val != 0)) {
+        if (((adev->devices.out_devices & AUDIO_DEVICE_OUT_ALL) != val) && (val != 0)) {
             if (out == adev->active_output) {
                 do_output_standby(out);
                 /* a change in output device may change the microphone selection */
@@ -1966,8 +1972,8 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
                     force_input_standby = true;
                 }
             }
-            adev->devices &= ~AUDIO_DEVICE_OUT_ALL;
-            adev->devices |= val;
+            adev->devices.out_devices &= ~AUDIO_DEVICE_OUT_ALL;
+            adev->devices.out_devices |= val;
             select_output_device(adev);
         }
 
@@ -1990,8 +1996,8 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
        pthread_mutex_lock(&out->lock);
        if (val != 0) {
            do_output_standby(out);
-           adev->devices &= ~AUDIO_DEVICE_OUT_ALL;
-           adev->devices |= val;
+           adev->devices.out_devices &= ~AUDIO_DEVICE_OUT_ALL;
+           adev->devices.out_devices |= val;
            select_output_device(adev);
 
            /* This is required as FM does not have any physical stream
@@ -2236,8 +2242,8 @@ static int start_input_stream(struct omap_stream_in *in)
     adev->active_input = in;
 
     if (adev->mode != AUDIO_MODE_IN_CALL) {
-        adev->devices &= ~AUDIO_DEVICE_IN_ALL;
-        adev->devices |= in->device;
+        adev->devices.in_devices &= ~AUDIO_DEVICE_IN_ALL;
+        adev->devices.in_devices |= in->device & ~AUDIO_DEVICE_BIT_IN;
         select_input_device(adev);
         adev->vx_rec_on = false;
     } else {
@@ -2293,7 +2299,7 @@ static int start_input_stream(struct omap_stream_in *in)
         adev->active_input = NULL;
         return -ENOMEM;
     }
-    if (adev->devices & AUDIO_DEVICE_IN_FM_RADIO_RX) {
+    if (adev->devices.in_devices & AUDIO_DEVICE_IN_FM_RADIO_RX) {
        ALOGI("FM:FM capture path opened successfully!!\nFM:Triggering loopback for FM capture path");
        fm_enable = true;
        pcm_start(in->pcm);
@@ -2373,7 +2379,7 @@ static int do_input_standby(struct omap_stream_in *in)
 
         adev->active_input = 0;
         if (adev->mode != AUDIO_MODE_IN_CALL) {
-            adev->devices &= ~AUDIO_DEVICE_IN_ALL;
+            adev->devices.in_devices &= ~AUDIO_DEVICE_IN_ALL;
             select_input_device(adev);
         }
 
@@ -3183,7 +3189,7 @@ static int set_voice_volume(struct audio_hw_device *dev, float volume)
     enum ril_sound_type sound_type;
 
     if (adev->mode == AUDIO_MODE_IN_CALL) {
-        switch(adev->devices & AUDIO_DEVICE_OUT_ALL) {
+        switch(adev->devices.out_devices & AUDIO_DEVICE_OUT_ALL) {
             case AUDIO_DEVICE_OUT_EARPIECE:
             default:
                 sound_type = SOUND_TYPE_VOICE;
@@ -3612,7 +3618,8 @@ static int adev_open(const hw_module_t* module, const char* name,
         set_route_by_array(adev->mixer, hf_dl1, 1);
     }
     adev->mode = AUDIO_MODE_NORMAL;
-    adev->devices = AUDIO_DEVICE_OUT_SPEAKER | AUDIO_DEVICE_IN_BUILTIN_MIC;
+    adev->devices.out_devices = AUDIO_DEVICE_OUT_SPEAKER;
+    adev->devices.in_devices = AUDIO_DEVICE_IN_BUILTIN_MIC & ~AUDIO_DEVICE_BIT_IN;
     select_output_device(adev);
 
     adev->pcm_modem_dl = NULL;

@@ -25,7 +25,7 @@ $(call inherit-product, device/bn/ovation/full_ovation.mk)
 
 DEVICE_PACKAGE_OVERLAYS += device/bn/ovation/overlay/cm
 
-TARGET_HAS_CUSTOM_LIBION := true
+BOARD_USE_CUSTOM_LIBION := true
 
 PRODUCT_NAME := cm_ovation
 PRODUCT_DEVICE := ovation

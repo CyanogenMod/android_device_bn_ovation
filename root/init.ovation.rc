@@ -31,6 +31,14 @@ on init
     export DEFAULT_BASEIMAGE /system/lib/dsp/baseimage.dof
 
 on post-fs
+    setprop ro.radio.noril yes
+
+# H264 Encoder Profile setting
+# 1 - Base Profile
+# 2 - Main Profile
+# 8 - High Profile
+    setprop video.h264enc.profile 1
+
     # Insert BT modules
     #Disable BT LE
     insmod /system/lib/modules/bluetooth.ko force_acl_master=1 enable_mgmt=1 enable_le=0
@@ -58,13 +66,23 @@ on fs
     chown bluetooth bluetooth /dev/ttyO3
 
 on post-fs-data
+    mkdir /data/media 0775 media_rw media_rw
+    chown media_rw media_rw /data/media
     # we will remap this as /mnt/sdcard with the sdcard fuse tool
     mkdir /int-data/media 0775 media_rw media_rw
     chown media_rw media_rw /int-data/media
+
+    mkdir /cache/trace 0777 system system
+    chown system system /cache/trace
+
+    mkdir /data/smc 0770 drmrpc drmrpc
+    chown drmrpc drmrpc /data/smc/counter.bin
+    chown drmrpc drmrpc /data/smc/storage.bin
+    chown drmrpc drmrpc /data/smc/system.bin
+
     setprop vold.post_fs_data_done 1
 
 on boot
-    setprop ro.radio.noril yes
 
     # fake some battery state
     setprop status.battery.state Slow
@@ -218,6 +236,29 @@ service uim /system/bin/uim-sysfs
     user root
     group bluetooth net_bt_admin
 
+###################################################
+# MSHIELD SMC Daemon - component required to store persistent data coming
+#   from the SMC PA to the device persistent storage
+###################################################
+service tf_daemon /system/bin/tf_daemon \
+    -d -c /system/etc/smc_normal_world_android_cfg.ini
+    class main
+    user root
+    group root
+    oneshot
+    disabled
+
+###################################################
+# MSHIELD SMC PA Control - installs the SMC PA into the Secure Environment
+###################################################
+service smc_pa /system/bin/smc_pa_ctrl \
+    -c /system/etc/smc_normal_world_android_cfg.ini \
+    start /vendor/firmware/smc_pa.ift
+    class core
+    user root
+    group root
+    oneshot
+
 service bootcnt /system/bin/clear_bootcnt.sh
     class core
     user root
@@ -225,7 +266,7 @@ service bootcnt /system/bin/clear_bootcnt.sh
     disabled
     oneshot
 
-service sdcard /system/bin/sdcard /int-data/media 1023 1023
+service sdcard /system/bin/sdcard /int-data/media /storage/sdcard0 1023 1023
     class main
 
 service p2p_supplicant /system/bin/wpa_supplicant -Dnl80211 -iwlan0 -c/data/misc/wifi/wpa_supplicant.conf

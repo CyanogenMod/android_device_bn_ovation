@@ -29,9 +29,9 @@ struct omap_ion_tiler_alloc_data {
  struct ion_handle *handle;
  size_t stride;
  size_t offset;
- unsigned int out_align;
+ __u32 out_align;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- unsigned int token;
+ __u32 token;
 };
 enum {
  OMAP_ION_HEAP_TYPE_TILER = ION_HEAP_TYPE_CUSTOM + 1,

@@ -1,0 +1,617 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Need OCD?</title>
+<style type="text/css">
+.Header1 {
+				margin: 0px 0 0 0;
+				font-size: xx-large;
+				font-weight: bold;
+				text-align: left;
+				line-height: normal;
+				background-color: #E0E0E0;
+}
+.Header2 {
+				font-size: xx-large;
+				font-weight: bold;
+				margin: 0px;
+				line-height: 100%;
+}
+.Header3 {
+				font-size: x-large;
+				font-weight: bold;
+				text-align: left;
+				line-height: 100%;
+				margin: 0px;
+}
+.note {
+				font-family: Arial, Helvetica, sans-serif;
+				font-weight: bold;
+				margin-left: 40px;
+}
+.description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
+.download { float: right; }
+.inline_code {
+				font-family: "Courier New", Courier, monospace;
+				font-size: small;
+}
+.cmd_line {
+				background: #000;
+				color: #fff;
+				padding: 10px;
+				font-family: "Courier New", Courier, monospace;
+				font-size: small;
+}
+.code_block {
+				margin-left: 40px;
+				font-family: "Courier New", Courier, monospace;
+				font-size: small;
+}
+.filename {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: small;
+}
+.Code_Header {
+				font-size: xx-large;
+				font-weight: bold;
+				text-align: left;
+				font-family: "Courier New", Courier, monospace;
+}
+.Code_Header_2 {
+				font-size: x-large;
+				font-weight: bold;
+				text-align: left;
+				font-family: "Courier New", Courier, monospace;
+}
+.Code_Header_3 {
+				font-size: large;
+				font-weight: bold;
+				text-align: left;
+				font-family: "Courier New", Courier, monospace;
+}
+.indent {
+				margin-left: 40px;
+}
+.ctr_thinbord {
+				text-align: center;
+				border: 1px solid #000000;
+}
+.style4 {
+				border-width: 0px;
+				margin-left: 40px;
+}
+.style5 {
+				margin-left: 80px;
+				font-family: "Courier New", Courier, monospace;
+				font-size: small;
+}
+</style>
+</head>
+
+<body>
+
+<table style="width: 100%; line-height: 100%;">
+				<tr>
+								<td style="width: 484px">
+<img alt="" src="ocdlogo.jpg"/></td>
+								<td>
+								<p>OCD is a set of Open Color format Definitions.</p>
+<p>Color formats are used in everything from BLTers to video codecs, and from cameras to displays.&nbsp; But although 
+there are plenty of common formats, the definition of the code specifying them is never the same. </p>
+								<p>OCD attempts to solve this problem.&nbsp; It provides logical color format codes, and 
+								is extensible.</p>
+<hr />
+												<table style="width: 100%">
+																<tr>
+																				<td>
+<div class="download"><img alt="CC BY-ND" longdesc="Creative Commons Attribution-NoDerivs 3.0 Unported License" src="http://i.creativecommons.org/l/by-nd/3.0/88x31.png" width="88" height="31" /></div>
+<p class="Header2">License</p>
+																</td>
+																</tr>
+																<tr>
+																				<td>
+<div>
+<p class="style17">The definitions are designed and maintained by Texas Instruments, Inc., but anyone is free to use them with no 
+cost or obligation.</p>
+<p>This project is licensed under the <a href="http://creativecommons.org/licenses/by-nd/3.0/">Creative Commons 
+Attribution-NoDerivs 3.0 Unported License</a>.</p>
+</div>
+																				</td>
+																</tr>
+												</table>
+<hr />
+    							<table style="width: 100%">
+												<tr>
+																<td>
+    <p class="Header2">Source</p>
+    															</td>
+												</tr>
+												<tr>
+																<td>
+    <div class="download">
+      <a href="http://github.com/graphics/ocd/zipball/master">
+        <img width="90" alt="download zip" src="http://github.com/images/modules/download/zip.png" border="0"/></a>
+      <a href="http://github.com/graphics/ocd/tarball/master">
+        <img width="90" alt ="download tar" src="http://github.com/images/modules/download/tar.png" border="0"/></a>
+    </div>
+<div>
+      Get the source code on GitHub at <a href="http://github.com/graphics/ocd">graphics/ocd</a>, or download this 
+		project in either
+      <a href="http://github.com/graphics/ocd/zipball/master">zip</a> or
+      <a href="http://github.com/graphics/ocd/tarball/master">tar</a> formats.</div>
+    <p>You can also clone the project with <a href="http://git-scm.com">Git</a> by running:</p>
+      <pre><a class="cmd_line">$ git clone git://github.com/graphics/ocd</a></pre>
+																</td>
+												</tr>
+												<tr><td><hr />
+																<table style="width: 100%">
+																				<tr>
+																								<td class="Header2">Wiki</td>
+																				</tr>
+																				<tr>
+																								<td><a href="https://github.com/graphics/ocd/wiki">https://github.com/graphics/ocd/wiki</a></td>
+																				</tr>
+																</table>
+																</td></tr>
+								</table>
+								</td>
+				</tr>
+</table>
+<hr />
+<p class="Header1">Header File</p>
+<p><span class="filename">ocd.h</span> contains the Open Color format Definitions.</p>
+<p class="Header1">How does it work?</p>
+<p>OCD was designed to allow a single 32-bit word (int) to specify the 
+color format.&nbsp; The color format is specified as an enumeration.&nbsp; The 
+enumeration values are constructed using bitfields.</p>
+<p>OCD breaks off a chunk of those 32 bits to specify a vendor ID.&nbsp; With 
+this, OCD can allow vendors with very unique formats to obtain their own vendor 
+ID and specify any of 16 million formats of their own.&nbsp; Minimum sharing 
+here, but maximum flexibility.</p>
+<p class="Code_Header_2">OCDFMTDEF_VENDOR_ALL</p>
+<p>The power of OCD lies in the shared vendor ID.&nbsp; The 
+<span class="inline_code">OCDFMTDEF_VENDOR_ALL</span> vendor ID indicates that the common set of definitions is 
+being used.&nbsp; And this set of definitions is designed to specify pretty much 
+any reasonably common color format in use today.</p>
+<p>When <span class="inline_code">OCDFMTDEF_VENDOR_ALL</span> is chosen, the remaining 24 bits of the format are 
+sub-divided into bitfields used to describe the format.</p>
+<p class="Header2">Predefined Names</p>
+<p>A set of enumeration values are already provided with predefined names.&nbsp; 
+It is easiest for clients to use these predefined values.&nbsp; They already cover most of 
+the formats likely to be encountered.</p>
+<p class="note">NOTE:&nbsp; The naming conventions of the predefined formats are based on their byte 
+ordering, so they are not endian-dependent.&nbsp; The exceptions are the 16-bit 
+packed formats, which are little-endian.</p>
+<p>Some examples:</p>
+<p class="indent"><span class="inline_code">OCDFMT_RGB24</span> is a format 
+where each pixel consists of 3 bytes (24 bits).&nbsp; The first byte in memory 
+(at address A, read as a byte) is the red component.&nbsp; The second byte in 
+memory (at address A+1, read as a byte) is the green component.&nbsp; The third 
+byte in memory (at address A+2, read as a byte) is the blue component.</p>
+<p class="indent">OCDFMT_xRGB24 is a format where each pixel consists of 4 bytes 
+(32 bits), but only 3 of these (24 bits) contain color information.&nbsp; The 
+remaining 8 bits are ignored on a read, or filled with 0s on a write.</p>
+<p>If the format of interest is not already specified, it is still likely that 
+the format is supported by the VENDOR_ALL design.&nbsp; Using the bitfields below, new combinations can be constructed.&nbsp; These 
+combinations are already legal, but they just have not been given names.&nbsp; 
+Users of OCD can define their own names in a separate header file and include it 
+using the OCD_EXTERNAL_INCLUDE mechanism:</p>
+<p class="indent">file: <span class="filename">myocdfmts.h</span></p>
+<p class="style5">MYOCDFMT_ALPHAMONO8 = OCDFMT_MONO8 |<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+OCDFMTDEF_ALPHA,</p>
+<p class="indent">file:&nbsp; <span class="filename">mysource.c</span></p>
+<p class="style5">#define OCD_EXTERNAL_INCLUDE &quot;myocdfmts.h&quot;<br />
+#include &lt;ocd.h&gt;</p>
+<p class="Header2">VENDOR_ALL Bitfields</p>
+<p>The following bitfields only apply to the <span class="inline_code">
+OCDFMTDEF_VENDOR_ALL</span> color formats. </p>
+<p class="Header3">Color Space</p>
+<p>The first field specifies the color space.&nbsp; Currently there are five 
+color spaces defined, but there is room for three more if the need arises:</p>
+<ul>
+				<li>Monochrome - <span class="inline_code">OCDFMTDEF_CS_MONO</span></li>
+				<li>Look-Up Table - <span class="inline_code">OCDFMTDEF_CS_LUT</span></li>
+				<li>RGB -<span class="inline_code"> OCDFMTDEF_CS_RGB</span></li>
+				<li>YCbCr (a.k.a. YUV) - <span class="inline_code">
+				OCDFMTDEF_CS_YCbCr</span></li>
+				<li>Alpha - <span class="inline_code">OCDFMTDEF_CS_ALPHA</span></li>
+</ul>
+<p>Once the color space has been selected, the remaining bits depend on that 
+choice:</p>
+<p class="Code_Header_3">OCDFMTDEF_CS_MONO</p>
+<table class="style4">
+				<tr>
+								<td class="ctr_thinbord">31:24</td>
+								<td class="ctr_thinbord">23:21</td>
+								<td class="ctr_thinbord">20:19</td>
+								<td class="ctr_thinbord">18</td>
+								<td class="ctr_thinbord">17</td>
+								<td class="ctr_thinbord">16</td>
+								<td class="ctr_thinbord">15:14</td>
+								<td class="ctr_thinbord">13:11</td>
+								<td class="ctr_thinbord">10</td>
+								<td class="ctr_thinbord">9</td>
+								<td class="ctr_thinbord">8:6</td>
+								<td class="ctr_thinbord">5:0</td>
+				</tr>
+				<tr>
+								<td class="ctr_thinbord">00000000</td>
+								<td class="ctr_thinbord">000</td>
+								<td class="ctr_thinbord">reserved<br />
+								(00)</td>
+								<td class="ctr_thinbord">alpha</td>
+								<td class="ctr_thinbord">non-premult/<br />
+								fill empty 0</td>
+								<td class="ctr_thinbord">reserved<br />
+								(0)</td>
+								<td class="ctr_thinbord">reserved<br />
+								(0)</td>
+								<td class="ctr_thinbord">reserved<br />
+								(0)</td>
+								<td class="ctr_thinbord">reversed</td>
+								<td class="ctr_thinbord">reserved<br />
+								(0)</td>
+								<td class="ctr_thinbord">container<br />
+								size</td>
+								<td class="ctr_thinbord">color<br />
+								bits-1</td>
+				</tr>
+</table>
+<p class="Code_Header_3">OCDFMTDEF_CS_LUT</p>
+<table class="style4">
+				<tr>
+								<td class="ctr_thinbord">31:24</td>
+								<td class="ctr_thinbord">23:21</td>
+								<td class="ctr_thinbord">20:19</td>
+								<td class="ctr_thinbord">18</td>
+								<td class="ctr_thinbord">17</td>
+								<td class="ctr_thinbord">16</td>
+								<td class="ctr_thinbord">15:14</td>
+								<td class="ctr_thinbord">13:11</td>
+								<td class="ctr_thinbord">10</td>
+								<td class="ctr_thinbord">9</td>
+								<td class="ctr_thinbord">8:6</td>
+								<td class="ctr_thinbord">5:0</td>
+				</tr>
+				<tr>
+								<td class="ctr_thinbord">00000000</td>
+								<td class="ctr_thinbord">001</td>
+								<td class="ctr_thinbord">reserved<br />
+								(00)</td>
+								<td class="ctr_thinbord">reserved<br />
+								(0)</td>
+								<td class="ctr_thinbord">reserved<br />
+								(0)</td>
+								<td class="ctr_thinbord">reserved<br />
+								(0)</td>
+								<td class="ctr_thinbord">reserved<br />
+								(0)</td>
+								<td class="ctr_thinbord">reserved<br />
+								(0)</td>
+								<td class="ctr_thinbord">reversed</td>
+								<td class="ctr_thinbord">reserved<br />
+								(0)</td>
+								<td class="ctr_thinbord">container<br />
+								size</td>
+								<td class="ctr_thinbord">color<br />
+								bits-1</td>
+				</tr>
+</table>
+<p class="Code_Header_3">OCDFMTDEF_CS_RGB</p>
+<table class="style4">
+				<tr>
+								<td class="ctr_thinbord">31:24</td>
+								<td class="ctr_thinbord">23:21</td>
+								<td class="ctr_thinbord">20:19</td>
+								<td class="ctr_thinbord">18</td>
+								<td class="ctr_thinbord">17</td>
+								<td class="ctr_thinbord">16</td>
+								<td class="ctr_thinbord">15:14</td>
+								<td class="ctr_thinbord">13:11</td>
+								<td class="ctr_thinbord">10</td>
+								<td class="ctr_thinbord">9</td>
+								<td class="ctr_thinbord">8:6</td>
+								<td class="ctr_thinbord">5:0</td>
+				</tr>
+				<tr>
+								<td class="ctr_thinbord">00000000</td>
+								<td class="ctr_thinbord">010</td>
+								<td class="ctr_thinbord">reserved<br />
+								(00)</td>
+								<td class="ctr_thinbord">alpha</td>
+								<td class="ctr_thinbord">non-premult/<br />
+								fill empty 0</td>
+								<td class="ctr_thinbord">reserved<br />
+								(0)</td>
+								<td class="ctr_thinbord">reserved<br />
+								(00)</td>
+								<td class="ctr_thinbord">layout</td>
+								<td class="ctr_thinbord">reversed</td>
+								<td class="ctr_thinbord">left<br />
+								justified</td>
+								<td class="ctr_thinbord">container<br />
+								size</td>
+								<td class="ctr_thinbord">color<br />
+								bits-1</td>
+				</tr>
+</table>
+<p class="Code_Header_3">OCDFMTDEF_CS_YCbCr</p>
+<table class="style4">
+				<tr>
+								<td class="ctr_thinbord">31:24</td>
+								<td class="ctr_thinbord">23:21</td>
+								<td class="ctr_thinbord">20:19</td>
+								<td class="ctr_thinbord">18</td>
+								<td class="ctr_thinbord">17</td>
+								<td class="ctr_thinbord">16</td>
+								<td class="ctr_thinbord">15:14</td>
+								<td class="ctr_thinbord">13:11</td>
+								<td class="ctr_thinbord">10</td>
+								<td class="ctr_thinbord">9</td>
+								<td class="ctr_thinbord">8:6</td>
+								<td class="ctr_thinbord">5:0</td>
+				</tr>
+				<tr>
+								<td class="ctr_thinbord">00000000</td>
+								<td class="ctr_thinbord">011</td>
+								<td class="ctr_thinbord">standard</td>
+								<td class="ctr_thinbord">alpha</td>
+								<td class="ctr_thinbord">non-premult/<br />
+								fill empty 0</td>
+								<td class="ctr_thinbord">subsample<br />
+								position</td>
+								<td class="ctr_thinbord">subsampling</td>
+								<td class="ctr_thinbord">layout</td>
+								<td class="ctr_thinbord">reversed</td>
+								<td class="ctr_thinbord">left<br />
+								justified</td>
+								<td class="ctr_thinbord">container<br />
+								size</td>
+								<td class="ctr_thinbord">color<br />
+								bits-1</td>
+				</tr>
+</table>
+<p class="Code_Header_3">OCDFMTDEF_CS_ALPHA</p>
+<table class="style4">
+				<tr>
+								<td class="ctr_thinbord">31:24</td>
+								<td class="ctr_thinbord">23:21</td>
+								<td class="ctr_thinbord">20:19</td>
+								<td class="ctr_thinbord">18</td>
+								<td class="ctr_thinbord">17</td>
+								<td class="ctr_thinbord">16</td>
+								<td class="ctr_thinbord">15:14</td>
+								<td class="ctr_thinbord">13:11</td>
+								<td class="ctr_thinbord">10</td>
+								<td class="ctr_thinbord">9</td>
+								<td class="ctr_thinbord">8:6</td>
+								<td class="ctr_thinbord">5:0</td>
+				</tr>
+				<tr>
+								<td class="ctr_thinbord">00000000</td>
+								<td class="ctr_thinbord">100</td>
+								<td class="ctr_thinbord">reserved<br />
+								(00)</td>
+								<td class="ctr_thinbord">reserved<br />
+								(0)</td>
+								<td class="ctr_thinbord">reserved<br />
+								(0)</td>
+								<td class="ctr_thinbord">reserved<br />
+								(0)</td>
+								<td class="ctr_thinbord">reserved<br />
+								(00)</td>
+								<td class="ctr_thinbord">reserved<br />
+								(00)</td>
+								<td class="ctr_thinbord">reversed</td>
+								<td class="ctr_thinbord">reserved<br />
+								(0)</td>
+								<td class="ctr_thinbord">container<br />
+								size</td>
+								<td class="ctr_thinbord">alpha<br />
+								bits-1</td>
+				</tr>
+</table>
+<p>&nbsp;</p>
+<p class="Header3">Standard (YCbCr)</p>
+<p>This field specifies the standard being used for this color space.</p>
+<p>Currently, this field is only defined for the YCbCr color space:</p>
+<ul>
+				<li><a href="http://www.itu.int/rec/R-REC-BT.601/en">ITU-R BT.601</a> - <span class="inline_code">
+				OCDFMTDEF_STD_ITUR_601_YCbCr</span></li>
+				<li><a href="http://www.itu.int/rec/R-REC-BT.709/en">ITU-R BT.709</a> - <span class="inline_code">
+				OCDFMTDEF_STD_ITUR_709_YCbCr</span></li>
+				<li><a href="http://www.w3.org/Graphics/JPEG/jfif3.pdf">Full Scale</a> - <span class="inline_code">
+				OCDFMTDEF_FULLSCALE_YCbCr</span></li>
+</ul>
+<p>We believe that this field will be used to add linear format support in the 
+very near future.</p>
+<p class="Header3">Fill Empty 0 (Mono, RGB, YCbCr)</p>
+<p>When there is no alpha included with a format, but the color components don&#39;t 
+fill up the container, the remainder of the bits must be filled with something 
+when written.&nbsp; When the <span class="inline_code">OCDFMTDEF_FILL_EMPTY_0</span> 
+flag is not set, they are filled with 1.&nbsp; This is done in case they are 
+later used as an alpha value, which will already represent an opaque pixel 
+(whether the pixel is premultiplied or not).&nbsp; When the flag is set, they are 
+filled with 0, to accommodate those environments where they are required to be 
+cleared when unused.</p>
+<p class="Header3">Alpha (Mono, RGB, YCbCr)</p>
+<p>The <span class="inline_code">OCDFMTDEF_ALPHA</span> bit indicates that the 
+format includes an alpha channel along with the main color components.</p>
+<p class="Header3">Non-Premult (Mono, RGB, YCbCr)</p>
+<p>Formats with alpha can have their color components pre-multiplied by the 
+alpha component or not.&nbsp; When the <span class="inline_code">
+OCDFMTDEF_NON_PREMULT</span> bit is set, the color components are not 
+premultiplied by the accompanying alpha.&nbsp; When the bit is not set, the 
+color components are already multiplied by the alpha.</p>
+<p class="Header3">Subsampling (YCbCr)</p>
+<p>Some formats can be subsampled.&nbsp; At this point, only subsampled YCbCr is 
+supported.</p>
+<ul>
+				<li>No subsampling - <span class="inline_code">
+				OCDFMTDEF_SUBSAMPLE_NONE</span></li>
+				<li>4:2:2 subsampling - <span class="inline_code">
+				OCDFMTDEF_SUBSAMPLE_422_YCbCr</span></li>
+				<li>4:2:0 subsampling - <span class="inline_code">
+				OCDFMTDEF_SUBSAMPLE_420_YCbCr</span></li>
+				<li>4:1:1 subsampling - <span class="inline_code">
+				OCDFMTDEF_SUBSAMPLE_411_YCbCr</span></li>
+</ul>
+<p class="Header3">Subsample Position (YCbCr)</p>
+<p>Subsampling can have different equivalent positions relative to the pixels.&nbsp; 
+Vertical subsampling positions are consistent, so the following are supported to 
+control the horizontal subsampling position:</p>
+<ul>
+				<li><span class="inline_code">OCDFMTDEF_SUBSAMPLE_HORZ_ALIGNED 				</span>- subsamples are aligned with first pixel (e.g. MPEG-2 
+				spec)</li>
+				<li><span class="inline_code">OCDFMTDEF_SUBSAMPLE_HORZ_CENTERED
+				</span>- subsamples are centered between the pixels (e.g. MPEG-1 
+				spec)</li>
+</ul>
+<p>NOTE:&nbsp; It is encouraged that users of OCD be generous when handling 
+subsampling positions.&nbsp; Allowing misaligned subsampling is preferable to 
+complete failure.</p>
+<p class="Header3">Alpha Components (Alpha)</p>
+<p>To support applying alpha values to the individual components of other color 
+spaces, the alpha color space can have more than one alpha value per pixel.&nbsp; 
+This field specifies how many:</p>
+<ul>
+				<li><span class="inline_code">OCDFMTDEF_ALPHA_COMPONENTS_1 				</span>- pixel contains 1 alpha value (default)</li>
+				<li><span class="inline_code">OCDFMTDEF_ALPHA_COMPONENTS_2
+				</span>- pixel contains 2 alpha values</li>
+				<li><span class="inline_code">OCDFMTDEF_ALPHA_COMPONENTS_3
+				</span>- pixel contains 3 alpha values; suitable for RGB 
+				manipulation (e.g. FreeType/ClearType)</li>
+				<li><span class="inline_code">OCDFMTDEF_ALPHA_COMPONENTS_4
+				</span>-- pixel contains 4 alpha values</li>
+</ul>
+<p class="Header3">Layout (RGB, YCbCr)</p>
+<p>The layout values, in conjunction with the reversed and left-justified 
+modifiers, specify how the pixel components are placed into memory.&nbsp; All 
+non-RGB/YCbCr formats are packed.</p>
+<ul>
+				<li><span class="inline_code">OCDFMTDEF_PACKED </span>- pixel 
+				components are sequential in memory, defaulting to RGB or CbCr 
+				order, right justified</li>
+				<li><span class="inline_code">OCDFMTDEF_DISTRIBUTED </span>- 
+				pixel components that don&#39;t fill the container are evenly 
+				distributed within the container (e.g. 32 bits of ARGB in a 
+				64-bit container is distributed 8 bits every 16 bits: xAxRxGxB)</li>
+				<li><span class="inline_code">OCDFMTDEF_2_PLANE_YCbCr </span>- 
+				for subsampled formats only, Y plane is followed by subsampled 
+				interleaved CbCr plane</li>
+				<li><span class="inline_code">OCDFMTDEF_3_PLANE_STACKED </span>- 
+				pixel components are divided into planes that are sequential in 
+				memory</li>
+				<li><span class="inline_code">
+				OCDFMTDEF_3_PLANE_SIDE_BY_SIDE_YCbCr </span>- for subsampled 
+				formats only pixel components are divided into planes, with the 
+				non-subsampled component followed by the subsampled components 
+				stored side-by-side (lines interleaved) </li>
+</ul>
+<p class="Header3">Reversed (RGB, YCbCr)</p>
+<p><span class="inline_code">OCDFMTDEF_REVERSED</span> indicates that the order 
+of the color components is the opposite of the defaults.&nbsp; For RGB formats, 
+this means BGR.&nbsp; For YCbCr formats, this means CrCb.</p>
+<p class="Header3">Left-Justified (RGB, YCbCr)</p>
+<p><span class="inline_code">OCDFMTDEF_LEFT_JUSTIFIED</span> indicates that the 
+color components are shifted to the left, as opposed to the default of shifting 
+to the right.</p>
+<p>Some examples for <span class="inline_code">OCDFMTDEF_REVERSED</span> and
+<span class="inline_code">OCDFMTDEF_LEFT_JUSTIFIED</span>:</p>
+<ul>
+				<li>Packed RGB:&nbsp; x,R,G,B is the default byte order<ul>
+								<li>x,B,G,R is the format if
+								<span class="inline_code">OCDFMTDEF_REVERSED</span> 
+								is set</li>
+								<li>R,G,B,x is the format if
+								<span class="inline_code">
+								OCDFMTDEF_LEFT_JUSTIFIED</span> is set</li>
+								<li>B,G,R,x is the format if
+								<span class="inline_code">OCDFMTDEF_REVERSED</span> 
+								and <span class="inline_code">
+								OCDFMTDEF_LEFT_JUSTIFIED</span> are set</li>
+				</ul>
+				</li>
+				<li>Packed YCbCr 4:2:2:&nbsp; U,Y,V,Y is the default byte order<ul>
+								<li>V,Y,U,Y is the format if
+								<span class="inline_code">OCDFMTDEF_REVERSED</span> 
+								is set</li>
+								<li>Y,U,Y,V is the format if
+								<span class="inline_code">
+								OCDFMTDEF_LEFT_JUSTIFIED</span> is set</li>
+								<li>Y,V,Y,U is the format if
+								<span class="inline_code">OCDFMTDEF_REVERSED</span> 
+								and <span class="inline_code">
+								OCDFMTDEF_LEFT_JUSTIFIED</span> are set</li>
+				</ul>
+				</li>
+				<li>3-Plane YCbCr 4:2:2 or 4:2:0:&nbsp; The default is the Y 
+				plane, followed by the Cb plane and then the Cr plane.&nbsp; The 
+				Cb and Cr planes have half of the stride of the Y plane.<ul>
+								<li>If <span class="inline_code">
+								OCDFMTDEF_REVERSED</span> is set, the Cb and Cr 
+								planes are reversed.</li>
+								<li><span class="inline_code">
+								OCDFMTDEF_LEFT_JUSTIFIED</span> has a special 
+								case for this layout.&nbsp; When set, it 
+								indicates that the Cb and Cr planes have the 
+								same stride as the Y plane, and the Cb and Cr 
+								data is shifted to the left.</li>
+								<li>If both <span class="inline_code">
+								OCDFMTDEF_LEFT_REVERSED</span> and
+								<span class="inline_code">
+								OCDFMTDEF_LEFT_JUSTIFIED</span> are set, the Cb 
+								and Cr planes are reversed and double width.</li>
+				</ul>
+				</li>
+				<li>2-Plane YCbCr 4:2:2 or 4:2:0:&nbsp; The default is the Y 
+				plane, followed by the CbCr interleaved plane, with the same 
+				stride as the Y plane.<ul>
+								<li><span class="inline_code">OCDFMTDEF_REVERSED</span> 
+								swaps the Cb and Cr components.</li>
+				</ul>
+				</li>
+</ul>
+<p class="Header3">Container (All)</p>
+<p>The container field indicates the total size of all the bits of the color 
+components of a color format.&nbsp; This does not include the alpha component, 
+if it is present.</p>
+<ul>
+				<li><span class="inline_code">OCDFMTDEF_CONTAINER_8BIT</span> - 
+				Indicates the container is 8 bits.&nbsp; When the pixel 
+				component size is 4 bits or less, multiple pixels are stored in 
+				the container.</li>
+				<li><span class="inline_code">OCDFMTDEF_CONTAINER_16BIT</span> - 
+				Indicates the container is 16 bits.&nbsp; When the pixel 
+				component size is less than 16 bits, the remaining bits are 
+				available to be used as an alpha channel.</li>
+				<li><span class="inline_code">OCDFMTDEF_CONTAINER_24BIT</span> - 
+				Indicates the container is 24 bits.&nbsp; When the pixel 
+				component size is less than 24 bits, the remaining bits are 
+				available to be used as an alpha channel.</li>
+				<li><span class="inline_code">OCDFMTDEF_CONTAINER_32BIT</span> - 
+				Indicates the container is 32 bits.&nbsp; When the pixel 
+				component size is less than 32 bits, the remaining bits are 
+				available to be used as an alpha channel.</li>
+				<li><span class="inline_code">OCDFMTDEF_CONTAINER_48BIT</span> - 
+				Indicates the container is 48 bits.&nbsp; When the pixel 
+				component size is less than 48 bits, the remaining bits are 
+				available to be used as an alpha channel.</li>
+				<li><span class="inline_code">OCDFMTDEF_CONTAINER_64BIT</span> - 
+				Indicates the container is 64 bits.&nbsp; When the pixel 
+				component size is less than 64 bits, the remaining bits are 
+				available to be used as an alpha channel.</li>
+</ul>
+<p class="Header3">Component Size (All)</p>
+<p>The component size field specifies the total number of bits in the color 
+components, not including the alpha component.&nbsp; (It is specified in the 
+code with one subtracted.)</p>
+<p class="note">NOTE:&nbsp; The alpha only color space uses this to specify the total number 
+of alpha bits.</p>
+</body>
+
+</html>

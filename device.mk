@@ -71,11 +71,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(DEVICE_FOLDER)/prebuilt/poetry/poem.txt:root/sbin/poem.txt
 
-# gfx. This needs http://git.omapzoom.org/?p=device/ti/proprietary-open.git;a=commit;h=47a8187f2d8a08f7210b3c964b3b8e50f3b0da66
-#PRODUCT_PACKAGES += \
-#	ti_omap4_sgx_libs \
-#	ti_omap4_ducati_libs
-
 # ducati
 PRODUCT_COPY_FILES += \
 	$(DEVICE_FOLDER)/firmware/ducati-m3.bin:/system/vendor/firmware/ducati-m3.bin
@@ -116,7 +111,8 @@ PRODUCT_PACKAGES += \
 	CMStats \
 	uim-sysfs \
 	sdcard \
-	lights.ovation
+	lights.ovation \
+	audio.a2dp.default
 
 # Place permission files
 PRODUCT_COPY_FILES += \
@@ -166,30 +162,28 @@ PRODUCT_TAGS += dalvik.gc.type-precise
 
 DEVICE_PACKAGE_OVERLAYS := $(DEVICE_FOLDER)/overlay/aosp
 
-#$(call inherit-product, hardware/ti/omap4xxx/omap4.mk)
-# dont use omap4.mk. We have to drop camera.omap4 for now.
-# Just include rest directly here.
-PRODUCT_VENDOR_KERNEL_HEADERS := hardware/ti/omap4xxx/kernel-headers
+# TI OMAP4
 PRODUCT_PACKAGES += \
 	libdomx \
 	libOMX_Core \
 	libOMX.TI.DUCATI1.VIDEO.H264E \
+	libOMX.TI.DUCATI1.VIDEO.H264SVCE \
+	libOMX.TI.DUCATI1.VIDEO.VC1E \
 	libOMX.TI.DUCATI1.VIDEO.MPEG4E \
 	libOMX.TI.DUCATI1.VIDEO.DECODER \
 	libOMX.TI.DUCATI1.VIDEO.DECODER.secure \
 	libOMX.TI.DUCATI1.VIDEO.CAMERA \
 	libOMX.TI.DUCATI1.MISC.SAMPLE \
-	libdrmdecrypt \
 	libstagefrighthw \
         libI420colorconvert \
-	libtiutils \
+	libtiutils_custom \
 	libcamera \
-	libion \
+	libion_ti \
 	libomxcameraadapter \
 	smc_pa_ctrl \
 	tf_daemon \
 	libtf_crypto_sst \
-	hwcomposer.omap4 \
+	hwcomposer.ovation \
 
 PRODUCT_PACKAGES += \
 	libjni_pinyinime \
@@ -217,6 +211,15 @@ PRODUCT_PROPERTY_OVERRIDES := \
 	omap.enhancement=true \
 	ro.crypto.state=unencrypted \
 	persist.sys.root_access=3
+
+# Dalvik
+PRODUCT_PROPERTY_OVERRIDES += \
+    dalvik.vm.heapstartsize=8m \
+    dalvik.vm.heapgrowthlimit=64m \
+    dalvik.vm.heapsize=256m \
+    dalvik.vm.heaptargetutilization=0.75 \
+    dalvik.vm.heapminfree=512k \
+    dalvik.vm.heapmaxfree=8m
 
 # TI-Connectivity
 PRODUCT_COPY_FILES += \
