@@ -22,3 +22,6 @@
 
 #for GCX (but not needed on 4430)
 /dev/gcioctl              0666   system     system
+
+# Bluetooth
+/dev/hci_tty              0600   bluetooth  bluetooth 

@@ -110,6 +110,7 @@ PRODUCT_PACKAGES += \
 	hwprops \
 	CMStats \
 	uim-sysfs \
+	libbt-vendor \
 	sdcard \
 	lights.ovation \
 	audio.a2dp.default
