@@ -47,6 +47,10 @@ on post-fs
     insmod /system/lib/modules/btwilink.ko
     insmod /system/lib/modules/bnep.ko
 
+# change /dev/hdcp owner and permission for FQC test
+    chown system system /dev/hdcp
+    chmod 0666 /dev/hdcp
+
 on fs
     # mount partitions
     mount ext4 /dev/block/mmcblk1p2 /system wait ro errors=panic
@@ -225,6 +229,7 @@ on boot
 
 on property:dev.bootcomplete=1
     start bootcnt
+    start install_keybox
 
 # Initialize the SGX driver
 service pvrsrvinit /vendor/bin/pvrsrvinit
@@ -260,6 +265,10 @@ service smc_pa /system/bin/smc_pa_ctrl \
     class core
     user root
     group root
+    oneshot
+
+service install_keybox /system/bin/install_wv_keybox
+    disabled
     oneshot
 
 service bootcnt /system/bin/clear_bootcnt.sh

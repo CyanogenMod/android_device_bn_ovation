@@ -1,0 +1,8 @@
+#!/system/bin/sh
+
+if [ -e /data/smc/storage.bin ]; then
+    echo "WV installed"
+else
+    echo "WV setup"
+    /system/bin/wvdrm_test_client installKeybox /rom/devconf/WVKeybox
+fi

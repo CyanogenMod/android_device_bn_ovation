@@ -63,6 +63,14 @@ PRODUCT_COPY_FILES += \
     $(DEVICE_FOLDER)/prebuilt/sgx/pvrsrvinit:/system/vendor/bin/pvrsrvinit \
     $(DEVICE_FOLDER)/prebuilt/sgx/powervr.ini:/system/etc/powervr.ini
 
+# DRM prebuilts
+PRODUCT_COPY_FILES += \
+    $(DEVICE_FOLDER)/prebuilt/drm/smc_normal_world_android_cfg.ini:/system/etc/smc_normal_world_android_cfg.ini \
+    $(DEVICE_FOLDER)/prebuilt/drm/install_wv_keybox:/system/bin/install_wv_keybox \
+    $(DEVICE_FOLDER)/prebuilt/drm/wvdrm_test_client:/system/bin/wvdrm_test_client \
+    $(DEVICE_FOLDER)/prebuilt/drm/libion.so:/system/lib/libion.so \
+    $(DEVICE_FOLDER)/prebuilt/drm/smc_pa.ift:/system/vendor/firmware/smc_pa.ift
+
 # Prebuilts /system/bin
 PRODUCT_COPY_FILES += \
     $(DEVICE_FOLDER)/prebuilt/bin/strace:/system/bin/strace
@@ -75,19 +83,11 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
 	$(DEVICE_FOLDER)/firmware/ducati-m3.bin:/system/vendor/firmware/ducati-m3.bin
 
-# hdcp keys
-PRODUCT_COPY_FILES += \
-	$(DEVICE_FOLDER)/firmware/hdcp.keys:/system/vendor/firmware/hdcp.keys
-
 # Input
 PRODUCT_COPY_FILES += \
 	$(DEVICE_FOLDER)/prebuilt/usr/idc/ft5x06-i2c.idc:system/usr/idc/ft5x06-i2c.idc \
 	$(DEVICE_FOLDER)/prebuilt/usr/keylayout/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl\
 	$(DEVICE_FOLDER)/prebuilt/usr/keylayout/twl6030_pwrbutton.kl:system/usr/keylayout/twl6030_pwrbutton.kl
-
-# fwram
-#PRODUCT_COPY_FILES += \
-#	$(DEVICE_FOLDER)/prebuilt/fwram.ko:/system/lib/modules/fwram.ko
 
 # Vold
 PRODUCT_COPY_FILES += \
@@ -191,8 +191,6 @@ PRODUCT_PACKAGES += \
 	iontest \
 	libedid \
 	hwcomposer.default \
-	smc_pa_ctrl \
-	tf_daemon\
 	libaudioutils \
 	Music \
 	tinyplay \
@@ -264,5 +262,3 @@ $(call inherit-product, frameworks/native/build/tablet-dalvik-heap.mk)
 $(call inherit-product-if-exists, vendor/bn/ovation/device-vendor.mk)
 $(call inherit-product-if-exists, vendor/bn/ovation/device-vendor-blobs.mk)
 
-#$(call inherit-product, $(DEVICE_FOLDER)/wl12xx/ti-wl12xx-vendor.mk)
-#$(call inherit-product, $(DEVICE_FOLDER)/wl12xx/ti-wpan-products.mk)
