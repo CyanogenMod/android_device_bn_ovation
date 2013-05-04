@@ -58,15 +58,13 @@ on post-fs
 
 on fs
     # mount partitions
-    mount ext4 /dev/block/mmcblk1p2 /system wait ro errors=panic
+    mount ext4 /dev/block/platform/omap/omap_hsmmc.1/by-name/system /system wait ro errors=panic
     mount ext4 /dev/block/platform/omap/omap_hsmmc.1/by-name/cache /cache wait noatime nosuid nodev errors=panic
-    mount ext4 /dev/block/mmcblk1p3 /data wait noatime nosuid nodev errors=panic
+    mount ext4 /dev/block/platform/omap/omap_hsmmc.1/by-name/userdata /data wait noatime nosuid nodev errors=panic
     mount vfat /dev/block/platform/omap/omap_hsmmc.1/by-name/rom /rom sync noatime nodiratime uid=1000,gid=1000,fmask=117,dmask=007
     mount vfat /dev/block/platform/omap/omap_hsmmc.1/by-name/bootdata /bootdata wait noatime nodiratime uid=1000,gid=1000,fmask=117,dmask=007
 
     # Need to mount internal data partition to get access to emulated sdcard.
-    mkdir /int-data
-    mount ext4 /dev/block/platform/omap/omap_hsmmc.1/by-name/userdata /int-data wait noatime nosuid nodev
 
     # change permissions for Bluetooth/FM/GPS
     chmod 0600 /sys/class/rfkill/rfkill0/state
@@ -77,9 +75,6 @@ on fs
 on post-fs-data
     mkdir /data/media 0775 media_rw media_rw
     chown media_rw media_rw /data/media
-    # we will remap this as /mnt/sdcard with the sdcard fuse tool
-    mkdir /int-data/media 0775 media_rw media_rw
-    chown media_rw media_rw /int-data/media
 
     mkdir /cache/trace 0777 system system
     chown system system /cache/trace
@@ -284,7 +279,7 @@ service bootcnt /system/bin/clear_bootcnt.sh
     disabled
     oneshot
 
-service sdcard /system/bin/sdcard /int-data/media /mnt/shell/emulated 1023 1023
+service sdcard /system/bin/sdcard /data/media /mnt/shell/emulated 1023 1023
     class main
     disabled
 

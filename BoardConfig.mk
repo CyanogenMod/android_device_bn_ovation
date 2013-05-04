@@ -43,10 +43,10 @@ TARGET_GLOBAL_CPPFLAGS += -mtune=cortex-a9 -mfpu=neon -mfloat-abi=softfp
 TARGET_BOOTLOADER_BOARD_NAME := ovation
 
 # Kernel/Boot
-BOARD_KERNEL_BASE := 0x80008000
+BOARD_KERNEL_BASE := 0x80000000
 BOARD_KERNEL_PAGESIZE := 4096
-BOARD_KERNEL_CMDLINE := androidboot.console=ttyO0 console=ttyO0,115200n8 def_disp=lcd2
-BOARD_USES_UBOOT := true
+BOARD_KERNEL_CMDLINE := vmalloc=768M init=/init rootwait omap_wdt.timer_margin=20 androidboot.hardware=ovation
+#BOARD_USES_UBOOT := true
 
 # Filesystem
 TARGET_USERIMAGES_USE_EXT4 := true
@@ -100,14 +100,8 @@ ADDITIONAL_DEFAULT_PROPERTIES += ro.allow.mock.location=1
 # boot.img creation
 BOARD_CUSTOM_BOOTIMG_MK := device/bn/ovation/boot.mk
 TARGET_NO_BOOTLOADER := true
-TARGET_PROVIDES_RELEASETOOLS := true
 
-# hack the ota
-TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := ./device/bn/ovation/releasetools/ovation_ota_from_target_files
-# not tested at all
-TARGET_RELEASETOOL_IMG_FROM_TARGET_SCRIPT := ./device/bn/ovation/releasetools/ovation_img_from_target_files
-
-TARGET_KERNEL_CONFIG := cyanogenmod_ovation_green_sdcard_defconfig
+TARGET_KERNEL_CONFIG := cyanogenmod_ovation_green_defconfig
 TARGET_KERNEL_SOURCE := kernel/bn/ovation
 TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.4.3
 

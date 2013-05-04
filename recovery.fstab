@@ -1,11 +1,12 @@
-# This is sdcard-based setup
+# This is emmc-based setup
 # mount point	fstype    device    	[device2]
-/rom            vfat      /dev/block/mmcblk0p5
-/boot		vfat      /dev/block/mmcblk1p1
+#/rom            vfat      /dev/block/mmcblk0p5
+/recovery	emmc      /dev/block/mmcblk0p3
+/boot		emmc      /dev/block/mmcblk0p4
 /bootdata       vfat      /dev/block/mmcblk0p6
-/factory	ext4	  /dev/block/mmcblk0p7
-/system		ext4	  /dev/block/mmcblk1p2
-/cache      	ext4      /dev/block/mmcblk0p9
-/emmc  	 	vfat      /dev/block/mmcblk0p10
-/data  	 	ext4      /dev/block/mmcblk1p3
-/sdcard	 	vfat      /dev/block/mmcblk1p5
+#/factory	ext4	  /dev/block/mmcblk0p7
+/system		ext4	  /dev/block/platform/omap/omap_hsmmc.1/by-name/system
+/cache      	ext4      /dev/block/platform/omap/omap_hsmmc.1/by-name/cache
+/emmc  	 	datamedia /dev/null
+/data  	 	ext4      /dev/block/platform/omap/omap_hsmmc.1/by-name/userdata
+/sdcard	 	vfat      /dev/block/mmcblk1p1
