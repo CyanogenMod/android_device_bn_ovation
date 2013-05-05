@@ -107,14 +107,9 @@ TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := ./device/bn/ovation/releasetools/ov
 # not tested at all
 TARGET_RELEASETOOL_IMG_FROM_TARGET_SCRIPT := ./device/bn/ovation/releasetools/ovation_img_from_target_files
 
-TARGET_KERNEL_CONFIG := cyanogenmod_ovation_green_defconfig
+TARGET_KERNEL_CONFIG := cyanogenmod_ovation_green_sdcard_defconfig
 TARGET_KERNEL_SOURCE := kernel/bn/ovation
 TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.4.3
-
-#SGX_MODULES:
-#	cp kernel/bn/ovation/drivers/video/omap2/omapfb/omapfb.h $(KERNEL_OUT)/drivers/video/omap2/omapfb/omapfb.h
-#	make ARCH="arm" -C kernel/bn/ovation/external/sgx/src/eurasia_km/eurasiacon/build/linux2/omap4430_android CROSS_COMPILE=arm-eabi- TARGET_PRODUCT="blaze_tablet" BUILD=release TARGET_SGX=544sc PLATFORM_VERSION=4.0  KERNEL_CROSS_COMPILE=arm-eabi- KERNELDIR=$(KERNEL_OUT)
-#	mv $(KERNEL_OUT)/../../target/kbuild/pvrsrvkm_sgx544_112.ko $(KERNEL_MODULES_OUT)
 
 SGX_MODULES:
 	make clean -C $(DEVICE_FOLDER)/pvr-source/eurasiacon/build/linux2/omap4430_android
