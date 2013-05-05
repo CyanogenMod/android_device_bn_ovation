@@ -2,20 +2,25 @@ import init.ovation.usb.rc
 
 on init
     mount debugfs /sys/kernel/debug /sys/kernel/debug
+    mkdir /mnt/shell/emulated 0700 shell shell
     mkdir /storage 0050 system sdcard_r
-    mkdir /storage/sdcard0 0000 system system
+    mkdir /storage/emulated 0555 root root
     mkdir /storage/sdcard1 0000 system system
 
     # for backwards compatibility
-    symlink /storage/sdcard0 /mnt/emmc
-    symlink /storage/sdcard0 /emmc
-    symlink  /storage/sdcard1 /sdcard
-    symlink  /storage/sdcard1 /mnt/sdcard
+    symlink /storage/emulated/legacy /emmc
+    symlink /storage/emulated/legacy /mnt/emmc
+    symlink /storage/emulated/legacy /storage/sdcard0
+    symlink /storage/sdcard1 /sdcard
+    symlink /storage/sdcard1 /mnt/sdcard
+    symlink /mnt/shell/emulated/0 /storage/emulated/legacy
 
     symlink /system/vendor /vendor
 
-    export EXTERNAL_STORAGE /storage/sdcard1
-    export SECONDARY_STORAGE /storage/sdcard0
+    export EXTERNAL_STORAGE /storage/emulated/legacy
+    export SECONDARY_STORAGE /storage/sdcard1
+    export EMULATED_STORAGE_TARGET /storage/emulated
+    export EMULATED_STORAGE_SOURCE /mnt/shell/emulated
 
     # for ovation
     mkdir /rom 0777 root root	
@@ -85,6 +90,7 @@ on post-fs-data
     chown drmrpc drmrpc /data/smc/system.bin
 
     setprop vold.post_fs_data_done 1
+    start sdcard
 
 #for Bluetooth HID
     chmod 0666 /dev/uhid
@@ -278,8 +284,9 @@ service bootcnt /system/bin/clear_bootcnt.sh
     disabled
     oneshot
 
-service sdcard /system/bin/sdcard /int-data/media /storage/sdcard0 1023 1023
+service sdcard /system/bin/sdcard /int-data/media /mnt/shell/emulated 1023 1023
     class main
+    disabled
 
 service p2p_supplicant /system/bin/wpa_supplicant -Dnl80211 -iwlan0 -c/data/misc/wifi/wpa_supplicant.conf
     class main
