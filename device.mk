@@ -135,8 +135,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
 	liblights.ovation \
 	power.ovation \
-	sensors.ovation \
-	fw-symlink
+	sensors.ovation
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \
@@ -223,23 +222,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # TI-Connectivity
 PRODUCT_COPY_FILES += \
         $(DEVICE_FOLDER)/firmware/TIInit_7.6.15.bts:system/etc/firmware/TIInit_7.6.15.bts \
-	$(DEVICE_FOLDER)/firmware/wl1271-fw-multirole-plt.bin:system/etc/firmware/ti-connectivity/wl1271-fw-multirole-plt.bin \
-	$(DEVICE_FOLDER)/firmware/wl1271-fw-multirole-roc.bin:system/etc/firmware/ti-connectivity/wl1271-fw-multirole-roc.bin \
+	$(DEVICE_FOLDER)/firmware/wl1271-nvs_127x.bin:system/etc/firmware/ti-connectivity/wl1271-nvs.bin.orig \
 	$(DEVICE_FOLDER)/firmware/wl127x-fw-4-mr.bin:system/etc/firmware/ti-connectivity/wl127x-fw-4-mr.bin \
 	$(DEVICE_FOLDER)/firmware/wl127x-fw-4-plt.bin:system/etc/firmware/ti-connectivity/wl127x-fw-4-plt.bin \
 	$(DEVICE_FOLDER)/firmware/wl127x-fw-4-sr.bin:system/etc/firmware/ti-connectivity/wl127x-fw-4-sr.bin \
-	$(DEVICE_FOLDER)/firmware/wl127x-fw-mr.bin.r4:system/etc/firmware/ti-connectivity/wl127x-fw-mr.bin.r4 \
-	$(DEVICE_FOLDER)/firmware/wl127x-fw-mr.bin.r5:system/etc/firmware/ti-connectivity/wl127x-fw-mr.bin.r5 \
-	$(DEVICE_FOLDER)/firmware/wl127x-fw-mr_plt.bin.r4:system/etc/firmware/ti-connectivity/wl127x-fw-mr_plt.bin.r4 \
-	$(DEVICE_FOLDER)/firmware/wl128x-fw-4-mr.bin:system/etc/firmware/ti-connectivity/wl128x-fw-4-mr.bin \
-	$(DEVICE_FOLDER)/firmware/wl128x-fw-4-plt.bin:system/etc/firmware/ti-connectivity/wl128x-fw-4-plt.bin \
-	$(DEVICE_FOLDER)/firmware/wl128x-fw-4-sr.bin:system/etc/firmware/ti-connectivity/wl128x-fw-4-sr.bin \
-	$(DEVICE_FOLDER)/firmware/wl128x-fw-mr.bin.r4:system/etc/firmware/ti-connectivity/wl128x-fw-mr.bin.r4 \
-	$(DEVICE_FOLDER)/firmware/wl128x-fw-mr.bin.r5:system/etc/firmware/ti-connectivity/wl128x-fw-mr.bin.r5 \
-	$(DEVICE_FOLDER)/firmware/wl128x-fw-mr_plt.bin.r4:system/etc/firmware/ti-connectivity/wl128x-fw-mr_plt.bin.r4 \
-	$(DEVICE_FOLDER)/firmware/wl128x-fw-mr_plt.bin.r5:system/etc/firmware/ti-connectivity/wl128x-fw-mr_plt.bin.r5 \
-	$(DEVICE_FOLDER)/firmware/wl128x-fw-multirole-plt.bin:system/etc/firmware/ti-connectivity/wl128x-fw-multirole-plt.bin \
-	$(DEVICE_FOLDER)/firmware/wl128x-fw-multirole-roc.bin:system/etc/firmware/ti-connectivity/wl128x-fw-multirole-roc.bin \
         $(DEVICE_FOLDER)/firmware/ini_files/RFMD_D_E5.ini:system/etc/firmware/ti-connectivity/ini_files/RFMD_D_E5.ini \
         $(DEVICE_FOLDER)/firmware/ini_files/RFMD_S_3.5.ini:system/etc/firmware/ti-connectivity/ini_files/RFMD_S_3.5.ini \
         $(DEVICE_FOLDER)/firmware/ini_files/TQS_D_1.0.ini:system/etc/firmware/ti-connectivity/ini_files/TQS_D_1.0.ini \
