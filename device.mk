@@ -155,8 +155,8 @@ PRODUCT_PACKAGES += \
 	calibrator
 
 PRODUCT_CHARACTERISTICS := tablet
-PRODUCT_AAPT_CONFIG := normal mdpi
-PRODUCT_AAPT_PREF_CONFIG := mdpi
+PRODUCT_AAPT_CONFIG := xlarge hdpi xhdpi
+PRODUCT_AAPT_PREF_CONFIG := hdpi
 # we have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
 
@@ -204,7 +204,7 @@ PRODUCT_PROPERTY_OVERRIDES := \
 	ro.opengles.version=131072 \
 	ro.sf.lcd_density=240 \
 	wifi.interface=wlan0 \
-	wifi.supplicant_scan_interval=45 \
+	wifi.supplicant_scan_interval=120 \
 	com.ti.omap_enhancement=true \
 	omap.enhancement=true \
 	ro.crypto.state=unencrypted \
