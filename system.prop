@@ -12,6 +12,14 @@ ro.nf.profile=2
 ro.nf.level=512
 ro.sf.hwrotation=270
 
+# temperature sys fs node properties to be used by ThermalValidation/StressTest
+pcb.temp.sensor.sysfs.node=/sys/devices/platform/omap/pcb_temp_sensor.0/temp1_input
+batt.temp.sensor.sysfs.node=/sys/devices/platform/omap/omap_i2c.1/i2c-1/1-0055/power_supply/bq27500-0/temp
+cpu.temp.sensor.sysfs.node=/sys/devices/platform/omap/omap_temp_sensor.0/temp1_input
+# charge current sys fs node property to be used by ThermalValidation
+charge.current.sysfs.node=/sys/devices/platform/omap/omap_i2c.1/i2c-1/1-0055/power_supply/bq27500-0/current_now
+telephony.sms.send=false
+
 ro.vold.switchablepair=/storage/sdcard0,/storage/sdcard1
 persist.sys.usb.config=mtp,adb
 ro.additionalmounts=/mnt/emmc;/mnt/usbdisk
