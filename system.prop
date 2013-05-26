@@ -1,6 +1,9 @@
 #
 # system.prop for ovation
 #
+
+ro.cwm.forbid_format=/bootloader,/xloader,/factory,/rom
+
 wifi.interface=wlan0
 
 #define defaults for audio D/A mic and power mode
