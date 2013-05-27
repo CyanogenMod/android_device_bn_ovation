@@ -1240,7 +1240,7 @@ static void set_input_volumes(struct omap_audio_device *adev, int main_mic_on,
             if (headset_mic_on)
                 mixer_ctl_set_value(adev->mixer_ctls.amic_ul_volume, channel, volume);
             else
-                mixer_ctl_set_value(adev->mixer_ctls.dmic1_ul_volume, channel, volume+1);
+                mixer_ctl_set_value(adev->mixer_ctls.dmic2_ul_volume, channel, volume+1);
         }
     }
 }
