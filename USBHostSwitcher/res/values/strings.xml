@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">USBHost Switcher</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="usb_title">Nook HD/HD+ USB Host switcher</string>
+    <string name="usb_status">Forced USBHost status</string>
+    <string name="usb_button">Toggle Button</string>
+
+</resources>
