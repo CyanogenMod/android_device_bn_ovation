@@ -46,4 +46,8 @@
              android:primary="false"
              android:removable="true"
              android:allowMassStorage="true" />
+    <!-- external USB slots -->
+    <storage android:mountPoint="/storage/usb0"
+             android:storageDescription="@string/storage_usb"
+             android:removable="true" />
 </StorageList>

@@ -6,6 +6,7 @@ on init
     mkdir /storage 0050 system sdcard_r
     mkdir /storage/emulated 0555 root root
     mkdir /storage/sdcard1 0000 system system
+    mkdir /storage/usb0 0000 system system
 
     # for backwards compatibility
     symlink /storage/emulated/legacy /emmc
@@ -231,6 +232,9 @@ on boot
     # Accelerometer permissions
     chown system system /sys/bus/i2c/drivers/kxtf9/1-000e/delay
     chown system system /sys/bus/i2c/drivers/kxtf9/1-000e/enable
+
+    # USB ID properties - writable by all for now
+    chmod 0666 /sys/devices/platform/omap/omap_i2c.1/i2c-1/1-0048/twl6030_usb/usb_id
 
 on property:dev.bootcomplete=1
     start bootcnt
