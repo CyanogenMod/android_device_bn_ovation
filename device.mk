@@ -113,7 +113,8 @@ PRODUCT_PACKAGES += \
 	libbt-vendor \
 	sdcard \
 	lights.ovation \
-	audio.a2dp.default
+	audio.a2dp.default \
+	audio.usb.default
 
 # Place permission files
 PRODUCT_COPY_FILES += \
