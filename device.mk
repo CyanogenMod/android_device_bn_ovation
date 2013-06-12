@@ -184,6 +184,7 @@ PRODUCT_PACKAGES += \
 	libtf_crypto_sst \
 	hwcomposer.ovation \
 	libOMX.TI.DUCATI1.VIDEO.H264SVCE \
+	audio.hdmi.ovation \
 #	libOMX.TI.DUCATI1.VIDEO.CAMERA \
 
 PRODUCT_PACKAGES += \
