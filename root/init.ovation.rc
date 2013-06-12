@@ -57,6 +57,15 @@ on post-fs
     chown system system /dev/hdcp
     chmod 0666 /dev/hdcp
 
+    # Load SGX Modules
+    insmod /system/lib/modules/pvrsrvkm_sgx544_112.ko
+
+    # Wait for SGX module init
+    wait /dev/pvrsrvkm
+
+    # Initialize the SGX driver
+    exec /vendor/bin/pvrsrvinit
+
 on fs
     # mount partitions
     mount ext4 /dev/block/platform/omap/omap_hsmmc.1/by-name/system /system wait ro errors=panic
@@ -126,12 +135,6 @@ on boot
 
     # Fix wlan MAC addr
     exec /system/bin/fix-mac.sh
-
-    # Load SGX Modules
-    insmod /system/lib/modules/pvrsrvkm_sgx544_112.ko
-
-    # SGX driver
-    chmod 0666 /dev/pvrsrvkm
 
     chown media media /dev/syslink-proc4430
     chown media media /dev/syslink-procmgr
@@ -239,13 +242,6 @@ on boot
 on property:dev.bootcomplete=1
     start bootcnt
     start install_keybox
-
-# Initialize the SGX driver
-service pvrsrvinit /vendor/bin/pvrsrvinit
-    class core
-    user root
-    group root
-    oneshot
 
 #shared transport user space mgr service for Bluetooth, FM and GPS
 service uim /system/bin/uim-sysfs
