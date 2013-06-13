@@ -320,11 +320,11 @@ struct route_setting defaults[] = {
     },
     {
         .ctl_name = MIXER_DL1_MEDIA_PLAYBACK_VOLUME,
-        .intval = MIXER_ABE_GAIN_0DB - 2,
+        .intval = MIXER_ABE_GAIN_0DB + 12,
     },
     {
         .ctl_name = MIXER_DL1_VOICE_PLAYBACK_VOLUME,
-        .intval = MIXER_ABE_GAIN_0DB,
+        .intval = MIXER_ABE_GAIN_0DB + 10,
     },
     {
         .ctl_name = MIXER_SDT_DL_VOLUME,
