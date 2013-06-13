@@ -29,6 +29,6 @@ $(call inherit-product, device/bn/ovation/device.mk)
 # Discard inherited values and use our own instead.
 PRODUCT_NAME := full_ovation
 PRODUCT_DEVICE := ovation
-PRODUCT_BRAND := bn
+PRODUCT_BRAND := Android
 PRODUCT_MODEL := NookHD+
-PRODUCT_MANUFACTURER := bn
+PRODUCT_MANUFACTURER := BN
