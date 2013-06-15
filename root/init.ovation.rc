@@ -9,11 +9,11 @@ on init
     mkdir /storage/usb0 0000 system system
 
     # for backwards compatibility
-    symlink /storage/emulated/legacy /emmc
-    symlink /storage/emulated/legacy /mnt/emmc
     symlink /storage/emulated/legacy /storage/sdcard0
-    symlink /storage/sdcard1 /sdcard
-    symlink /storage/sdcard1 /mnt/sdcard
+    symlink /storage/sdcard0 /sdcard
+    symlink /storage/sdcard0 /mnt/sdcard
+    symlink /storage/sdcard1 /mnt/ext_sdcard
+    symlink /storage/sdcard1 /ext_sdcard
     symlink /mnt/shell/emulated/0 /storage/emulated/legacy
 
     symlink /system/vendor /vendor
