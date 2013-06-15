@@ -50,8 +50,8 @@ on post-fs
     insmod /system/lib/modules/bluetooth.ko force_acl_master=1 enable_mgmt=1 enable_le=0
     insmod /system/lib/modules/rfcomm.ko
     insmod /system/lib/modules/hidp.ko
+    insmod /system/lib/modules/hid-magicmouse.ko
     insmod /system/lib/modules/btwilink.ko
-    insmod /system/lib/modules/bnep.ko
 
 # change /dev/hdcp owner and permission for FQC test
     chown system system /dev/hdcp
