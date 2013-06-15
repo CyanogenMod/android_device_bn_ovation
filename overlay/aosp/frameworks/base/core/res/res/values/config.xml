@@ -148,10 +148,10 @@
 
     <!-- Device type information conforming to Annex B format in WiFi Direct specification.
          The default represents a dual-mode smartphone -->
-    <string translatable="false" name="config_wifi_p2p_device_type">1-0050F204-1</string>
+    <string translatable="true" name="config_wifi_p2p_device_type">1-0050F204-1</string>
 
     <!-- Boolean indicating whether the wifi chipset has p2p support -->
-    <bool translatable="false" name="config_wifi_p2p_support">true</bool>
+    <bool translatable="true" name="config_wifi_p2p_support">true</bool>
 
     <!-- Array of light sensor LUX values to define our levels for auto backlight brightness support.
          The N entries of this array define N 1 zones as follows:

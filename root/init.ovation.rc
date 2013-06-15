@@ -287,7 +287,9 @@ service sdcard /system/bin/sdcard /data/media /mnt/shell/emulated 1023 1023
     class main
     disabled
 
-service p2p_supplicant /system/bin/wpa_supplicant -Dnl80211 -iwlan0 -c/data/misc/wifi/wpa_supplicant.conf
+service p2p_supplicant /system/bin/wpa_supplicant \
+    -iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf -N \
+    -ip2p0 -Dnl80211 -c/data/misc/wifi/p2p_supplicant.conf -puse_p2p_group_interface= \
     class main
     socket wpa_wlan0 dgram 660 wifi wifi
     disabled
@@ -305,6 +307,16 @@ service dhcpcd_wlan0 /system/bin/dhcpcd -ABKL
     oneshot
 
 service iprenew_wlan0 /system/bin/dhcpcd -n
+    class main
+    disabled
+    oneshot
+
+service dhcpcd_p2p /system/bin/dhcpcd -aABKL
+    class main
+    disabled
+    oneshot
+
+service iprenew_p2p /system/bin/dhcpcd -n
     class main
     disabled
     oneshot
