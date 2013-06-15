@@ -19,4 +19,6 @@
 
 #define BTM_DEF_LOCAL_NAME   "Nook HD+"
 
+#define BTHC_USERIAL_READ_MEM_SIZE 2048
+
 #endif
