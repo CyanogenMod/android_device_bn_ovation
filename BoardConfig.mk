@@ -59,15 +59,7 @@ WIFI_MODULES:
 	mv hardware/ti/wlan/mac80211/compat_wl12xx/drivers/net/wireless/wl12xx/wl12xx.ko $(KERNEL_MODULES_OUT)
 	mv hardware/ti/wlan/mac80211/compat_wl12xx/drivers/net/wireless/wl12xx/wl12xx_sdio.ko $(KERNEL_MODULES_OUT)
 
-BT_MODULES:
-	make -C device/bn/bn-common/bluetooth-compat KERNELDIR=$(KERNEL_OUT) KLIB=$(KERNEL_OUT) KLIB_BUILD=$(KERNEL_OUT) ARCH=arm CROSS_COMPILE=arm-eabi-
-	mv device/bn/bn-common/bluetooth-compat/drivers/bluetooth/hci_uart.ko $(KERNEL_MODULES_OUT)
-	mv device/bn/bn-common/bluetooth-compat/drivers/bluetooth/btwilink.ko $(KERNEL_MODULES_OUT)
-	mv device/bn/bn-common/bluetooth-compat/net/bluetooth/bluetooth.ko $(KERNEL_MODULES_OUT)
-	mv device/bn/bn-common/bluetooth-compat/net/bluetooth/hidp/hidp.ko $(KERNEL_MODULES_OUT)
-	mv device/bn/bn-common/bluetooth-compat/net/bluetooth/rfcomm/rfcomm.ko $(KERNEL_MODULES_OUT)
-
-TARGET_KERNEL_MODULES := SGX_MODULES WIFI_MODULES BT_MODULES
+TARGET_KERNEL_MODULES := SGX_MODULES WIFI_MODULES
 
 #Config for building TWRP
 DEVICE_RESOLUTION := 1920x1280
