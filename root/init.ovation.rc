@@ -114,19 +114,10 @@ on boot
     mkdir /data/misc/dhcp 0770 dhcp dhcp
     chown dhcp dhcp /data/misc/dhcp
 
-    # Set default maximum of 1008 on cpu0
-    # (peformance settings will change this if set by user)
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1008000
-
-    # Give system ownership and permission to boost clock for specified timeout
-    # Note boost_timeout cannot be changed from application because of 
-    # dynamic sysfs creation. It will have default value of 3 sec.
-    chown system system /sys/devices/system/cpu/cpu0/cpufreq/boost_cpufreq
-    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/boost_cpufreq
-
-    # Boost the CPU for 30 secs during boot
-    write /sys/devices/system/cpu/cpufreq/interactive/boost_timeout 30000000
-    write /sys/devices/system/cpu/cpu0/cpufreq/boost_cpufreq 1
+    # Boost the CPU for 30 secs during boot, bump to 1.3GHz
+    write /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq 1300000
+    write /sys/devices/system/cpu/cpufreq/interactive/min_sample_time 30000000
+    write /sys/devices/system/cpu/cpufreq/interactive/boostpulse 1
 
     insmod /system/lib/modules/compat.ko
     insmod /system/lib/modules/cfg80211.ko
@@ -224,10 +215,6 @@ on boot
     chmod 0777 /dev/snd/pcmC0D5c
     chmod 0777 /dev/snd/pcmC0D5p
     chmod 0777 /dev/snd/timer
-
-    # Revert the boost_timeout to the default value of 3 sec. 
-    # Note this won't affect the prev boost request for boot time reduction
-    write /sys/devices/system/cpu/cpufreq/hotplug/boost_timeout 3000000
 
    # OVATION use the path below for lcd brightness control
     chown system system /sys/class/backlight/lcd-backlight/brightness
