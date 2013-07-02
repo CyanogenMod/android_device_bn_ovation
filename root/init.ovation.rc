@@ -208,8 +208,12 @@ on boot
     chmod 0777 /dev/snd/pcmC0D5p
     chmod 0777 /dev/snd/timer
 
-   # OVATION use the path below for lcd brightness control
+    # OVATION use the path below for lcd brightness control
     chown system system /sys/class/backlight/lcd-backlight/brightness
+
+    # touchscreen registers access
+    chown system system /sys/bus/i2c/drivers/ft5x06/3-0038/wmreg
+    chown system system /sys/bus/i2c/drivers/ft5x06/3-0038/wmval
 
     # Accelerometer permissions
     chown system system /sys/bus/i2c/drivers/kxtf9/1-000e/delay
