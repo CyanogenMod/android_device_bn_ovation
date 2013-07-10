@@ -14,4 +14,7 @@ dd if=/dev/zero of=/bootdata/BootCnt bs=1 count=4
 dd if=/dev/zero of=/bootdata/BCB bs=1 count=1088
 
 umount /bootdata
-rmdir /bootdata
+#rmdir /bootdata
+
+# Now adjust touchscreen sensitivity
+echo 0x16 >/sys/bus/i2c/drivers/ft5x06/3-0038/sensitivity
