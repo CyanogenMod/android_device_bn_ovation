@@ -41,7 +41,7 @@ BOARD_CUSTOM_BOOTIMG_MK := device/bn/ovation/boot.mk
 
 TARGET_KERNEL_CONFIG := cyanogenmod_ovation_green_defconfig
 TARGET_KERNEL_SOURCE := kernel/bn/hd-common
-TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.4.3
+#TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.4.3
 
 SGX_MODULES:
 	make clean -C $(COMMON_FOLDER)/pvr-source/eurasiacon/build/linux2/omap4430_android
