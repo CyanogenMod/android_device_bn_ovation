@@ -34,7 +34,7 @@ BOARD_USES_UBOOT := false
 # Recovery
 BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/bn/ovation/recovery/recovery_ui.c
 TARGET_RECOVERY_INITRC := device/bn/ovation/recovery/init.rc
-
+TARGET_RECOVERY_FSTAB = $(DEVICE_FOLDER)/root/fstab.ovation
 
 # boot.img creation
 BOARD_CUSTOM_BOOTIMG_MK := device/bn/ovation/boot.mk
