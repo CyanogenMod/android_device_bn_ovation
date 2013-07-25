@@ -83,7 +83,7 @@
     <bool name="config_batterySdCardAccessibility">true</bool>
 
     <!-- Boolean indicating whether the wifi chipset has p2p support -->
-    <bool translatable="false" name="config_wifi_p2p_support">true</bool>
+    <!-- <bool translatable="false" name="config_wifi_p2p_support">true</bool> -->
 
     <!-- Indicate whether closing the lid causes the device to go to sleep and opening
                   it causes the device to wake up.
