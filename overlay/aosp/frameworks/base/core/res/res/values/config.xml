@@ -82,9 +82,6 @@
     <!-- Indicate whether the SD card is accessible without removing the battery. -->
     <bool name="config_batterySdCardAccessibility">true</bool>
 
-    <!-- Boolean indicating whether the wifi chipset has p2p support -->
-    <!-- <bool translatable="false" name="config_wifi_p2p_support">true</bool> -->
-
     <!-- Indicate whether closing the lid causes the device to go to sleep and opening
                   it causes the device to wake up.
          The default is false. -->
@@ -151,7 +148,7 @@
     <string translatable="true" name="config_wifi_p2p_device_type">1-0050F204-1</string>
 
     <!-- Boolean indicating whether the wifi chipset has p2p support -->
-    <bool translatable="true" name="config_wifi_p2p_support">true</bool>
+    <!-- <bool translatable="true" name="config_wifi_p2p_support">true</bool> -->
 
     <!-- Array of light sensor LUX values to define our levels for auto backlight brightness support.
          The N entries of this array define N 1 zones as follows:
