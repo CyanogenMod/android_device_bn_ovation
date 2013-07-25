@@ -32,13 +32,10 @@ $(call inherit-product, device/bn/bn-common/common.mk)
 #    | tr '\n' ' ')
 
 PRODUCT_COPY_FILES += \
+	$(DEVICE_FOLDER)/root/fstab.ovation:root/fstab.ovation \
 	$(DEVICE_FOLDER)/root/init.ovation.rc:root/init.ovation.rc \
 	$(DEVICE_FOLDER)/root/init.ovation.usb.rc:root/init.ovation.usb.rc \
 	$(DEVICE_FOLDER)/root/ueventd.ovation.rc:root/ueventd.ovation.rc \
-
-# Vold
-PRODUCT_COPY_FILES += \
-	$(DEVICE_FOLDER)/prebuilt/etc/vold.ovation.fstab:system/etc/vold.fstab
 
 
 # postrecoveryboot for recovery

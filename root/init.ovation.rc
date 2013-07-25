@@ -1,27 +1,27 @@
 import init.ovation.usb.rc
 
 on init
-    mount debugfs /sys/kernel/debug /sys/kernel/debug
+     # See storage config details at http://source.android.com/tech/storage/
     mkdir /mnt/shell/emulated 0700 shell shell
-    mkdir /storage 0050 system sdcard_r
     mkdir /storage/emulated 0555 root root
-    mkdir /storage/sdcard1 0000 system system
-    mkdir /storage/usb0 0000 system system
-
-    # for backwards compatibility
-    symlink /storage/emulated/legacy /storage/sdcard0
-    symlink /storage/sdcard0 /sdcard
-    symlink /storage/sdcard0 /mnt/sdcard
-    symlink /storage/sdcard1 /mnt/ext_sdcard
-    symlink /storage/sdcard1 /ext_sdcard
-    symlink /mnt/shell/emulated/0 /storage/emulated/legacy
-
-    symlink /system/vendor /vendor
+    mkdir /storage/sdcard1 0555 root root
+    mkdir /storage/usb0 0555 root root
 
     export EXTERNAL_STORAGE /storage/emulated/legacy
     export SECONDARY_STORAGE /storage/sdcard1
-    export EMULATED_STORAGE_TARGET /storage/emulated
     export EMULATED_STORAGE_SOURCE /mnt/shell/emulated
+    export EMULATED_STORAGE_TARGET /storage/emulated
+
+    # Support legacy paths
+    symlink /storage/emulated/legacy /sdcard
+    symlink /storage/emulated/legacy /mnt/sdcard
+    symlink /storage/emulated/legacy /storage/sdcard0
+    symlink /mnt/shell/emulated/0    /storage/emulated/legacy
+
+    symlink /storage/sdcard1 /mnt/ext_sdcard
+    symlink /storage/sdcard1 /ext_sdcard
+
+    symlink /system/vendor /vendor
 
     # for ovation
     mkdir /rom 0777 root root	
@@ -33,8 +33,6 @@ on init
 
     # setup global environment
     export PHONE_STORAGE /storage/sdcard0
-    export DSP_PATH /system/lib/dsp
-    export DEFAULT_BASEIMAGE /system/lib/dsp/baseimage.dof
 
 on post-fs
     setprop ro.radio.noril yes
@@ -54,19 +52,14 @@ on post-fs
 
     # Wait for SGX module init
     wait /dev/pvrsrvkm
+    chmod 0666 /dev/pvrsrvkm
 
     # Initialize the SGX driver
     exec /vendor/bin/pvrsrvinit
 
 on fs
     # mount partitions
-    mount ext4 /dev/block/platform/omap/omap_hsmmc.1/by-name/system /system wait ro errors=panic
-    mount ext4 /dev/block/platform/omap/omap_hsmmc.1/by-name/cache /cache wait noatime nosuid nodev errors=panic
-    mount ext4 /dev/block/platform/omap/omap_hsmmc.1/by-name/userdata /data wait noatime nosuid nodev errors=panic
-    mount vfat /dev/block/platform/omap/omap_hsmmc.1/by-name/rom /rom sync noatime nodiratime uid=1000,gid=1000,fmask=117,dmask=007
-    mount vfat /dev/block/platform/omap/omap_hsmmc.1/by-name/bootdata /bootdata wait noatime nodiratime uid=1000,gid=1000,fmask=117,dmask=007
-
-    # Need to mount internal data partition to get access to emulated sdcard.
+    mount_all /fstab.ovation
 
     # change permissions for Bluetooth/FM/GPS
     chmod 0600 /sys/class/rfkill/rfkill0/state
@@ -93,6 +86,7 @@ on post-fs-data
     chmod 0666 /dev/uhid
 
 on boot
+    mount debugfs /sys/kernel/debug /sys/kernel/debug
 
     # fake some battery state
     setprop status.battery.state Slow
@@ -106,8 +100,8 @@ on boot
     mkdir /data/misc/dhcp 0770 dhcp dhcp
     chown dhcp dhcp /data/misc/dhcp
 
-    # Boost the CPU for 30 secs during boot, bump to 1.3GHz
-    write /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq 1300000
+    # Boost the CPU for 30 secs during boot, bump to 1.5GHz
+    write /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq 1500000
     write /sys/devices/system/cpu/cpufreq/interactive/min_sample_time 30000000
     write /sys/devices/system/cpu/cpufreq/interactive/boostpulse 1
 
@@ -119,105 +113,29 @@ on boot
     # Fix wlan MAC addr
     exec /system/bin/fix-mac.sh
 
-    chown media media /dev/syslink-proc4430
-    chown media media /dev/syslink-procmgr
-    chown media media /dev/syslink_ipc
-    chown media media /dev/omap-rproc0
-    chown media media /dev/omap-rproc1
-    chown media media /dev/omap-rproc2
-    chown media media /dev/iovmm-omap0
-    chown media media /dev/iovmm-omap1
-    chown media media /dev/omap-devh0
-    chown media media /dev/omap-devh1
-    chown media media /dev/omap-devh2
-
-    chmod 660 /dev/syslink-proc4430
-    chmod 660 /dev/syslink-procmgr
-    chmod 660 /dev/syslink_ipc
-    chmod 440 /dev/omap-rproc0
-    chmod 440 /dev/omap-rproc1
-    chmod 440 /dev/omap-rproc2
-    chmod 440 /dev/iovmm-omap0
-    chmod 440 /dev/iovmm-omap1
-    chmod 440 /dev/omap-devh0
-    chmod 440 /dev/omap-devh1
-    chmod 440 /dev/omap-devh2
-    
-    chown system system /sys/devices/virtual/input/input0/mode
-    chmod 0770 /sys/devices/virtual/input/input0/mode
-    chown system system /sys/devices/virtual/input/input0/delay
-    chmod 0770 /sys/devices/virtual/input/input0/delay
-    
-    # change permissions for Overlay
-    chown system system /dev/video1
-    chown system system /dev/video2
-    chown system system /dev/video3
-    
-    # change permissions for overlay managers and display devices
-    chown system system /sys/devices/platform/omapdss/display0/enabled
-    chown system system /sys/devices/platform/omapdss/display1/enabled
-    chown system system /sys/devices/platform/omapdss/display2/enabled
-    chown system system /sys/devices/platform/omapdss/display3/enabled
-    chown system system /sys/devices/platform/omapdss/display0/name
-    chown system system /sys/devices/platform/omapdss/display1/name
-    chown system system /sys/devices/platform/omapdss/display2/name
-    chown system system /sys/devices/platform/omapdss/display3/name
-    chown system system /sys/devices/platform/omapdss/overlay0/manager
-    chown system system /sys/devices/platform/omapdss/overlay1/manager
-    chown system system /sys/devices/platform/omapdss/overlay2/manager
-    chown system system /sys/devices/platform/omapdss/overlay3/manager
-    chown system system /sys/devices/platform/omapdss/overlay0/zorder
-    chown system system /sys/devices/platform/omapdss/overlay1/zorder
-    chown system system /sys/devices/platform/omapdss/overlay2/zorder
-    chown system system /sys/devices/platform/omapdss/overlay3/zorder
-    
-    # change permissions for manager tranparency parameters
-    chown system system /sys/devices/platform/omapdss/manager0/name
-    chown system system /sys/devices/platform/omapdss/manager0/display
-    chown system system /sys/devices/platform/omapdss/manager1/name
-    chown system system /sys/devices/platform/omapdss/manager1/display
-    chown system system /sys/devices/platform/omapdss/manager2/name
-    chown system system /sys/devices/platform/omapdss/manager2/display
-    chown system system /sys/devices/platform/omapdss/overlay0/enabled
-    chown system system /sys/devices/platform/omapdss/overlay1/enabled
-    chown system system /sys/devices/platform/omapdss/overlay2/enabled
-    chown system system /sys/devices/platform/omapdss/overlay3/enabled
-    
-    # change permissions for display timings to get the resolutions
-    chown system system /sys/devices/platform/omapdss/display0/timings
-    chown system system /sys/devices/platform/omapdss/display1/timings
-    chown system system /sys/devices/platform/omapdss/display2/timings
-    chown system system /sys/devices/platform/omapdss/display3/timings
-    chown system system /sys/devices/platform/omapdss/display2/code
-
     # change permissions for i2c-2 device
     chmod 0660 /dev/i2c-2
     chown media media /dev/i2c-2
 
-    # change permissions for alsa nodes
-    chmod 0777 /dev/snd/controlC0
-    chmod 0777 /dev/snd/pcmC0D0p
-    chmod 0777 /dev/snd/pcmC0D1c
-    chmod 0777 /dev/snd/pcmC0D1p
-    chmod 0777 /dev/snd/pcmC0D2c
-    chmod 0777 /dev/snd/pcmC0D3c
-    chmod 0777 /dev/snd/pcmC0D3p
-    chmod 0777 /dev/snd/pcmC0D4c
-    chmod 0777 /dev/snd/pcmC0D4p
-    chmod 0777 /dev/snd/pcmC0D5c
-    chmod 0777 /dev/snd/pcmC0D5p
-    chmod 0777 /dev/snd/timer
+    # change permissions for Tiler driver
+    chmod 0777 /dev/tiler
+    chmod 0777 /dev/dmm
+
+    # change permissions for ION driver
+    chmod 0777 /dev/ion
+
+    # sensor/i2c/backlight permissions
+    chown system system /sys/devices/virtual/input/input0/mode
+    chmod 0770 /sys/devices/virtual/input/input0/mode
+    chown system system /sys/devices/virtual/input/input0/delay
+    chmod 0770 /sys/devices/virtual/input/input0/delay
+    chown system system /sys/bus/i2c/drivers/ft5x06/3-0038/wmreg
+    chown system system /sys/bus/i2c/drivers/ft5x06/3-0038/wmval
+    chown system system /sys/bus/i2c/drivers/kxtf9/1-000e/delay
+    chown system system /sys/bus/i2c/drivers/kxtf9/1-000e/enable
 
     # OVATION use the path below for lcd brightness control
     chown system system /sys/class/backlight/lcd-backlight/brightness
-
-    # touchscreen registers access
-    chown system system /sys/bus/i2c/drivers/ft5x06/3-0038/wmreg
-    chown system system /sys/bus/i2c/drivers/ft5x06/3-0038/wmval
-
-    # Accelerometer permissions
-    chown system system /sys/bus/i2c/drivers/kxtf9/1-000e/delay
-    chown system system /sys/bus/i2c/drivers/kxtf9/1-000e/enable
 
     # USB ID properties - writable by all for now
     chmod 0666 /sys/devices/platform/omap/omap_i2c.1/i2c-1/1-0048/twl6030_usb/usb_id

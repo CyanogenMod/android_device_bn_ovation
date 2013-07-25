@@ -1,0 +1,13 @@
+# Android fstab file for emmc-based device
+#<src>                                                  <mnt_point>        <type>    <mnt_flags and options>                            <fs_mgr_flags>
+# The filesystem that contains the filesystem checker binary (typically /system) cannot
+# specify MF_CHECK, and must come before any filesystems that do specify MF_CHECK
+/dev/block/platform/omap/omap_hsmmc.1/by-name/system    /system            ext4      ro,errors=panic                                    wait
+/dev/block/platform/omap/omap_hsmmc.1/by-name/userdata  /data              ext4      rw,nosuid,nodev,noatime,errors=panic               wait,check,encryptable=footer
+/dev/block/platform/omap/omap_hsmmc.1/by-name/cache     /cache             ext4      rw,nosuid,nodev,noatime,errors=panic               wait,check
+/dev/block/platform/omap/omap_hsmmc.1/by-name/rom       /rom               vfat      rw,noatime,nodiratime,uid=1000,gid=1000,fmask=117,dmask=007  defaults
+/devices/platform/omap/omap_hsmmc.0/mmc_host/mmc1       /storage/sdcard1   vfat      defaults                                           voldmanaged=ext_sdcard:auto
+/dev/block/mmcblk0p4                                    /boot              emmc      defaults                                           defaults
+/dev/block/mmcblk0p3                                    /recovery          emmc      defaults                                           defaults
+/dev/block/mmcblk0p6                                    /bootdata          vfat      rw,noatime,nodiratime,uid=1000,gid=1000,fmask=117,dmask=007                                          defaults
+/devices/platform/omap/musb-omap2430/musb-hdrc/usb1/1-1 /storage/usb0      vfat      defaults                                           voldmanaged=storage/usb0:auto
