@@ -25,11 +25,8 @@ TARGET_BOOTLOADER_BOARD_NAME := ovation
 
 $(call inherit-product, device/bn/bn-common/common.mk)
 
-# copy all kernel modules under the "modules" directory to system/lib/modules
-#PRODUCT_COPY_FILES += $(shell \
-#    find $(DEVICE_FOLDER)/modules -name '*.ko' \
-#    | sed -r 's/^\/?(.*\/)([^/ ]+)$$/\1\2:system\/lib\/modules\/\2/' \
-#    | tr '\n' ' ')
+# Device overlay
+DEVICE_PACKAGE_OVERLAYS += $(DEVICE_FOLDER)/overlay/aosp
 
 PRODUCT_COPY_FILES += \
 	$(DEVICE_FOLDER)/root/fstab.ovation:root/fstab.ovation \
