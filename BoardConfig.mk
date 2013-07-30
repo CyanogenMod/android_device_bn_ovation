@@ -31,13 +31,8 @@ TARGET_BOOTLOADER_BOARD_NAME := ovation
 # Kernel/Boot
 BOARD_USES_UBOOT := false
 
-# Recovery
-BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/bn/ovation/recovery/recovery_ui.c
-TARGET_RECOVERY_INITRC := device/bn/ovation/recovery/init.rc
-TARGET_RECOVERY_FSTAB = $(DEVICE_FOLDER)/root/fstab.ovation
-
 # boot.img creation
-BOARD_CUSTOM_BOOTIMG_MK := device/bn/ovation/boot.mk
+BOARD_CUSTOM_BOOTIMG_MK := $(DEVICE_FOLDER)/boot.mk
 
 TARGET_KERNEL_CONFIG := cyanogenmod_ovation_green_defconfig
 TARGET_KERNEL_SOURCE := kernel/bn/hd-common
@@ -60,6 +55,12 @@ WIFI_MODULES:
 	mv hardware/ti/wlan/mac80211/compat_wl12xx/drivers/net/wireless/wl12xx/wl12xx_sdio.ko $(KERNEL_MODULES_OUT)
 
 TARGET_KERNEL_MODULES := SGX_MODULES WIFI_MODULES
+
+# Recovery
+BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../$(DEVICE_FOLDER)/recovery/recovery_ui.c
+TARGET_RECOVERY_INITRC := $(DEVICE_FOLDER)/recovery/init.rc
+TARGET_RECOVERY_FSTAB = $(DEVICE_FOLDER)/root/fstab.ovation
+RECOVERY_FSTAB_VERSION = 2
 
 #Config for building TWRP
 DEVICE_RESOLUTION := 1920x1200
