@@ -43,8 +43,6 @@ $(INSTALLED_BOOTIMAGE_TARGET): \
 	$(hide) $(call assert-max-image-size,$@, \
 		$(BOARD_BOOTIMAGE_PARTITION_SIZE),raw)
 
-# FIXME-HASH: disabled recovery
-ifeq (1,0)
 #
 # Recovery Image
 #
@@ -87,5 +85,4 @@ else #!BOARD_USES_UBOOT_MULTIIMAGE
 		zip -qDj $@ $(recovery_uboot_ramdisk) $(recovery_kernel)
 		@echo ----- Made recovery image \(zip\) -------- $@
 
-endif
 endif
