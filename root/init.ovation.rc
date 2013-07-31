@@ -85,6 +85,7 @@ on post-fs
     chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
     chmod 0600 /dev/ttyO3
     chown bluetooth bluetooth /dev/ttyO3
+    chmod 0666 /dev/rfkill
 
 on post-fs-data
     # we will remap this as /mnt/sdcard with the sdcard fuse tool
