@@ -1,0 +1,12 @@
+[
+  {
+    "repository": "android_device_bn_common",
+    "target_path": "device/bn/common"
+  },
+  {
+    "repository": "android_kernel_bn_omap",
+    "target_path": "kernel/bn/omap"
+  }
+]
+
+
