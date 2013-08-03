@@ -23,7 +23,7 @@
 DEVICE_FOLDER := device/bn/ovation
 TARGET_BOOTLOADER_BOARD_NAME := ovation
 
-$(call inherit-product, device/bn/bn-common/common.mk)
+$(call inherit-product, device/bn/common/common.mk)
 
 # Device overlay
 DEVICE_PACKAGE_OVERLAYS += $(DEVICE_FOLDER)/overlay/aosp
