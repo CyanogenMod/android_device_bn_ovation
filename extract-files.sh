@@ -17,4 +17,4 @@ done
 ./setup-makefiles.sh
 
 # Call up to bowser-common
-../bowser-common/extract-files.sh
+../common/extract-files.sh

@@ -23,7 +23,7 @@ TARGET_BOARD_OMAP_CPU := 4470
 TARGET_BOOTLOADER_BOARD_NAME := ovation
 
 # inherit from common
--include device/bn/bn-common/BoardConfigCommon.mk
+-include device/bn/common/BoardConfigCommon.mk
 
 # inherit from the proprietary version
 -include vendor/bn/hd-common/BoardConfigVendor.mk
@@ -40,7 +40,7 @@ TARGET_RECOVERY_INITRC := device/bn/ovation/recovery/init.rc
 BOARD_CUSTOM_BOOTIMG_MK := device/bn/ovation/boot.mk
 
 TARGET_KERNEL_CONFIG := cyanogenmod_ovation_green_defconfig
-TARGET_KERNEL_SOURCE := kernel/bn/hd-common
+TARGET_KERNEL_SOURCE := kernel/bn/omap
 TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.4.3
 
 SGX_MODULES:
