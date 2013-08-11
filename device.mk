@@ -41,5 +41,12 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_AAPT_CONFIG := xlarge hdpi xhdpi
 
-$(call inherit-product-if-exists, frameworks/native/build/tablet-10in-xhdpi-2048-dalvik-heap.mk)
+PRODUCT_PROPERTY_OVERRIDES += \
+    dalvik.vm.heapstartsize=8m \
+    dalvik.vm.heapgrowthlimit=128m \
+    dalvik.vm.heapsize=448m \
+    dalvik.vm.heaptargetutilization=0.75 \
+    dalvik.vm.heapminfree=2m \
+    dalvik.vm.heapmaxfree=8m
+
 $(call inherit-product-if-exists, vendor/bn/hd-common/hd-common-vendor.mk)
