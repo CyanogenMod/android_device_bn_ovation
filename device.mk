@@ -49,4 +49,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.heapminfree=2m \
     dalvik.vm.heapmaxfree=8m
 
+# wifi-only device
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.carrier=wifi-only
+
 $(call inherit-product-if-exists, vendor/bn/hd-common/hd-common-vendor.mk)
