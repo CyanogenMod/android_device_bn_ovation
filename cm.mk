@@ -22,6 +22,7 @@ $(call inherit-product, vendor/cm/config/common_full_tablet_wifionly.mk)
 
 # Inherit device configuration for ovation
 $(call inherit-product, device/bn/ovation/full_ovation.mk)
+$(call inherit-product, device/bn/common/cm.mk)
 
 # Device overlay
 DEVICE_PACKAGE_OVERLAYS += device/bn/ovation/overlay/cm
