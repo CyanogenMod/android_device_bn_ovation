@@ -45,10 +45,6 @@ on fs
     chmod 0777 /dev/ion
 
     # sensor/i2c/backlight permissions
-    chown system system /sys/devices/virtual/input/input0/mode
-    chmod 0770 /sys/devices/virtual/input/input0/mode
-    chown system system /sys/devices/virtual/input/input0/delay
-    chmod 0770 /sys/devices/virtual/input/input0/delay
     chown system system /sys/bus/i2c/drivers/ft5x06/3-0038/wmreg
     chown system system /sys/bus/i2c/drivers/ft5x06/3-0038/wmval
     chown system system /sys/bus/i2c/drivers/kxtf9/1-000e/delay
