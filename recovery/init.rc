@@ -45,6 +45,10 @@ service recovery /sbin/recovery
 service adbd /sbin/adbd recovery
     disabled
 
+service vold /sbin/minivold
+    socket vold stream 0660 root mount
+    ioprio be 2
+
 # Always start adbd on userdebug and eng builds
 # In recovery, always run adbd as root.
 on property:ro.debuggable=1
