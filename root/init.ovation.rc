@@ -217,6 +217,16 @@ service iprenew_p2p /system/bin/dhcpcd -n
     disabled
     oneshot
 
+service dhcpcd_bt-pan /system/bin/dhcpcd -ABKL
+    class main
+    disabled
+    oneshot
+
+service iprenew_bt-pan /system/bin/dhcpcd -n
+    class main
+    disabled
+    oneshot
+
 on property:wlan.driver.status=ok
     chown wifi wifi /sys/devices/platform/wl1271/bt_coex_state
 
