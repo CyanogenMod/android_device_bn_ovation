@@ -180,7 +180,7 @@ service bootcnt /system/bin/clear_bootcnt.sh
     disabled
     oneshot
 
-service sdcard /system/bin/sdcard -u 1023 -g 1023 /data/media /mnt/shell/emulated
+service sdcard /system/bin/sdcard -u 1023 -g 1023 -l /data/media /mnt/shell/emulated
     class late_start
     disabled
 
