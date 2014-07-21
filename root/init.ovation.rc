@@ -34,9 +34,14 @@ on init
     # Enable off mode by default
     write /sys/kernel/debug/pm_debug/enable_off_mode 1
 
+    # disable swap page clustering -- recommended in https://source.android.com/devices/low-ram.html
+    write /proc/sys/vm/page-cluster 0
+
 on fs
     # mount partitions
     mount_all /fstab.ovation
+    # enable zram
+    swapon_all /fstab.ovation
     setprop ro.crypto.fuse_sdcard true
 
     # pvr module
