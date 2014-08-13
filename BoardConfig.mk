@@ -28,6 +28,10 @@ TARGET_BOOTLOADER_BOARD_NAME := ovation
 # inherit from the proprietary version
 -include vendor/bn/hd-common/BoardConfigVendor.mk
 
+# use stub camera from device/bn/common.
+BN_CAMERA_STUB := true
+USE_CAMERA_STUB := false
+
 # Kernel/Boot
 BOARD_USES_UBOOT := false
 
