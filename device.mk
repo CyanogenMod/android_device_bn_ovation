@@ -23,9 +23,6 @@
 DEVICE_FOLDER := device/bn/ovation
 TARGET_BOOTLOADER_BOARD_NAME := ovation
 
-# use stub camera from device/bn/common.
-BN_CAMERA_STUB := true
-
 $(call inherit-product, device/bn/common/common.mk)
 
 # Device overlay
