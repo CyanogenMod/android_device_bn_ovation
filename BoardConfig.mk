@@ -33,6 +33,7 @@ BOARD_USES_UBOOT := false
 # boot.img creation
 BOARD_CUSTOM_BOOTIMG_MK := $(DEVICE_FOLDER)/boot.mk
 
+TARGET_KERNEL_VARIANT_CONFIG := android_ovation_defconfig
 
 # Recovery
 BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../$(DEVICE_FOLDER)/recovery/recovery_keys.c
