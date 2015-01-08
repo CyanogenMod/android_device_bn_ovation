@@ -1,0 +1,13 @@
+on early-init
+    setenforce permissive
+    loglevel 7
+
+on fs
+    mkdir /bootdata
+    mount vfat /dev/block/platform/omap/omap_hsmmc.1/by-name/bootdata /bootdata
+    exec /sbin/dd if=/dev/zero of=/bootdata/BootCnt bs=1 count=4
+
+on boot
+    write /sys/class/android_usb/android0/idVendor ${usb.vendor}
+    write /sys/class/android_usb/android0/idProduct ${usb.product.mtpadb}
+

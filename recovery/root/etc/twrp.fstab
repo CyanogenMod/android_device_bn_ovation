@@ -1,0 +1,7 @@
+# mount point  fstype  device                                                  flags
+/data          f2fs    /dev/block/platform/omap/omap_hsmmc.1/by-name/userdata  flags=length=-16384;fsflags="inline_xattr"
+/cache         ext4    /dev/block/platform/omap/omap_hsmmc.1/by-name/cache
+/system        ext4    /dev/block/platform/omap/omap_hsmmc.1/by-name/system
+/boot          emmc    /dev/block/platform/omap/omap_hsmmc.1/by-name/boot
+/recovery      emmc    /dev/block/platform/omap/omap_hsmmc.1/by-name/recovery
+/external_sd   vfat    /dev/block/mmcblk1p1     /dev/block/mmcblk1             flags=display="Micro SDcard";storage;wipeingui;removable

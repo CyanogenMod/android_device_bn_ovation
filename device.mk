@@ -32,12 +32,14 @@ PRODUCT_COPY_FILES += \
 	$(DEVICE_FOLDER)/root/fstab.ovation:root/fstab.ovation \
 	$(DEVICE_FOLDER)/root/init.ovation.rc:root/init.ovation.rc \
 	$(DEVICE_FOLDER)/root/init.ovation.usb.rc:root/init.ovation.usb.rc \
+	$(DEVICE_FOLDER)/recovery/init.recovery.ovation.rc:/root/init.recovery.ovation.rc \
 	$(DEVICE_FOLDER)/root/ueventd.ovation.rc:root/ueventd.ovation.rc \
 
-
-# postrecoveryboot for recovery
-PRODUCT_COPY_FILES += \
-    $(DEVICE_FOLDER)/recovery/postrecoveryboot.sh:recovery/root/sbin/postrecoveryboot.sh
+# Device settings
+PRODUCT_PROPERTY_OVERRIDES += \
+    usb.vendor=2080 \
+    usb.product.adb=0005 \
+    usb.product.mtpadb=0005 \
 
 PRODUCT_AAPT_CONFIG := xlarge hdpi xhdpi
 
