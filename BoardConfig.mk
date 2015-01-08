@@ -27,10 +27,8 @@ TARGET_BOOTLOADER_BOARD_NAME := ovation
 # inherit from the proprietary version
 -include vendor/bn/hd-common/BoardConfigVendor.mk
 
-# Kernel/Boot
-BOARD_USES_UBOOT := false
-
 # boot.img creation
+BOARD_CUSTOM_BOOTIMG := true
 BOARD_CUSTOM_BOOTIMG_MK := $(DEVICE_FOLDER)/boot.mk
 
 TARGET_KERNEL_VARIANT_CONFIG := android_ovation_defconfig
