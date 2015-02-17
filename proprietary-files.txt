@@ -22,11 +22,6 @@
 #     directory for use in the build of other open source files.
 #
 
-# For DRM key unpacking
-bin/wvdrm_test_client
-bin/install_wv_keybox
-lib/libion.so
-
 # Firmware
 vendor/firmware/smc_pa.ift
 vendor/firmware/ducati-m3.bin
@@ -38,3 +33,10 @@ vendor/firmware/ini_files/TQS_D_1.0.ini
 vendor/firmware/ini_files/TQS_D_1.7.ini
 vendor/firmware/ini_files/TQS_S_2.5.ini
 
+# Widevine DRM
+lib/libdrmdecrypt.so
+vendor/lib/drm/libdrmwvmplugin.so
+vendor/lib/mediadrm/libwvdrmengine.so
+vendor/lib/libwvdrm_L3.so
+vendor/lib/libwvm.so
+vendor/lib/libWVStreamControlAPI_L3.so
