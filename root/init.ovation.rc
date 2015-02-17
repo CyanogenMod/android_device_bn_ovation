@@ -8,6 +8,7 @@ on fs
 
     # mount partitions
     mount_all /fstab.ovation
+    swapon_all /fstab.ovation
     setprop ro.crypto.fuse_sdcard true
 
 on post-fs

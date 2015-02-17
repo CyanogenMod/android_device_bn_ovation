@@ -12,3 +12,4 @@
 /dev/block/mmcblk0p3                                    /recovery   emmc   defaults                                                 defaults
 /dev/block/mmcblk0p6                                    /bootdata   vfat   rw,noatime,nodiratime,uid=1000,gid=1000,fmask=117,dmask=007  defaults
 /devices/platform/omap/musb-omap2430/musb-hdrc/usb1/1-1 auto        auto   defaults                                                 voldmanaged=usb0:auto
+/dev/block/zram0                                        none        swap   defaults                                                 zramsize=67108864
