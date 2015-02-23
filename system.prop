@@ -8,5 +8,6 @@ omap.audio.mic.main=AMic0
 omap.audio.mic.sub=AMic1
 omap.audio.power=PingPong
 ro.sf.hwrotation=270
+persist.hwc.mirroring.transform=3
 ro.vold.switchablepair=/storage/sdcard0,/storage/sdcard1
 ro.additionalmounts=/mnt/emmc;/mnt/usbdisk
