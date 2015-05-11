@@ -41,7 +41,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     usb.product.adb=0005 \
     usb.product.mtpadb=0005 \
 
-PRODUCT_AAPT_CONFIG := xlarge hdpi xhdpi
+PRODUCT_AAPT_CONFIG := normal
 
 PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.heapstartsize=8m \
